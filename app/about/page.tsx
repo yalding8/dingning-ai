@@ -3,7 +3,7 @@ import Image from "next/image";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 export const metadata: Metadata = {
-  title: "关于我",
+  title: "关于",
   description:
     "Ning Ding，异乡好居副总裁，dingning.ai 创始人。白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。",
 };

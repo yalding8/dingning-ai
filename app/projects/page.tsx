@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "项目",
   description: "Ning Ding 构建和推动的项目：异乡好居、异乡缴费、异乡人才。",
 };
 
@@ -45,7 +45,7 @@ export default function ProjectsPage() {
     <section className="py-16 md:py-24">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
-          Projects
+          项目
         </h1>
         <p className="text-base text-[var(--text-secondary)] mb-12">
           我在做的事——不只是做了什么，更是在其中思考了什么

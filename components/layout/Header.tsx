@@ -6,10 +6,10 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Blog", href: "/blog" },
-  { label: "Projects", href: "/projects" },
-  { label: "Resources", href: "/resources" },
-  { label: "About", href: "/about" },
+  { label: "博客", href: "/blog" },
+  { label: "项目", href: "/projects" },
+  { label: "资源", href: "/resources" },
+  { label: "关于", href: "/about" },
 ];
 
 export function Header() {
