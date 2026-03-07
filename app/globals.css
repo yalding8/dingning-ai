@@ -3,25 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* 背景 */
+  --bg-primary:    #FAFAF7;
+  --bg-secondary:  #F4F4F0;
+  --bg-tertiary:   #EBEBE6;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* 文字 */
+  --text-primary:  #1A1A1A;
+  --text-secondary:#4B5563;
+  --text-muted:    #9CA3AF;
+
+  /* 强调色 */
+  --accent:        #0F4C75;
+  --accent-light:  #1A6FA0;
+
+  /* 边框 */
+  --border:        #E5E7EB;
+  --border-strong: #D1D5DB;
+
+  /* 状态色 */
+  --success:       #059669;
+  --warning:       #D97706;
+  --error:         #DC2626;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  color: var(--text-primary);
+  background: var(--bg-primary);
 }

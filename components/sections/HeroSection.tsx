@@ -1,0 +1,48 @@
+import Image from "next/image";
+import { NewsletterForm } from "@/components/ui/NewsletterForm";
+
+export function HeroSection() {
+  return (
+    <section className="py-16 md:py-24">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          {/* 形象照 */}
+          <div className="shrink-0">
+            <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
+              <Image
+                src="/images/neil-ding-placeholder.svg"
+                alt="Neil Ding"
+                width={208}
+                height={208}
+                priority
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* 文字内容 */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-tight tracking-tight">
+              我不会写代码，
+              <br />
+              但我用 AI 构建了三款产品
+            </h1>
+            <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
+              Neil Ding · 异乡好居 VP · 白天管业务，晚上写产品。
+              <br className="hidden md:block" />
+              一个国际教育老兵的 AI 实验场。
+            </p>
+
+            {/* Newsletter */}
+            <div className="w-full max-w-md">
+              <p className="text-xs text-[var(--text-muted)] mb-2">
+                每两周一封，只分享真实实践
+              </p>
+              <NewsletterForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
