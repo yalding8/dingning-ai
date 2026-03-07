@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Neil Ding 构建和推动的项目：异乡好居、异乡缴费、异乡人才。",
+  description: "Ning Ding 构建和推动的项目：异乡好居、异乡缴费、异乡人才。",
 };
 
 const projects = [
