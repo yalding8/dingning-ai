@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Neil Ding - dingning.ai",
   },
   description:
-    "我不会写代码，但我用 AI 构建了三款产品。异乡好居 VP，AI 实践者，Vibe Coder。",
+    "我不会写代码，但我用 AI 构建了三款产品。异乡好居副总裁，dingning.ai 创始人，Vibe Coder。",
   openGraph: {
     title: "Neil Ding - dingning.ai",
     description:

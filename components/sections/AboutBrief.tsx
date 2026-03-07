@@ -10,13 +10,15 @@ export function AboutBrief() {
             关于我
           </h2>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我是 Neil Ding，异乡好居副总裁，同时也是 dingning.ai 的创始人。
-            异乡好居服务全球
-            <span className="font-medium text-[var(--text-primary)]"> 27 个国家</span>的留学生，
-            累计交易规模超
-            <span className="font-medium text-[var(--text-primary)]"> 70 亿</span>，
-            服务超过
-            <span className="font-medium text-[var(--text-primary)]"> 26 万</span>名留学生。
+            我是 Neil Ding，异乡好居副总裁，同时也是 dingning.ai 这个一人公司的创始人。
+            异乡好居服务全球留学生的海外住宿预订，累计服务超过
+            <span className="font-medium text-[var(--text-primary)]"> 40 万</span>名客户，
+            目的地超过
+            <span className="font-medium text-[var(--text-primary)]"> 27 个国家和地区</span>。
+            我同时负责异乡缴费，过去 5 年累计服务超过
+            <span className="font-medium text-[var(--text-primary)]"> 18 万</span>名客户，
+            交易金额超
+            <span className="font-medium text-[var(--text-primary)]"> 75 亿</span>。
           </p>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-6">
             我相信一个人也可以成为一个公司。白天推动 AI 在国际教育行业的落地，
