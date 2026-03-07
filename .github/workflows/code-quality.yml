@@ -1,0 +1,45 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-check:
+    name: Lint & Type Check & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type check
+        run: npx tsc --noEmit
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Build verification
+        run: npm run build
+
+      - name: Check for console.log in components
+        run: |
+          FOUND=$(grep -rn "console\.log" app/ components/ lib/ --include="*.ts" --include="*.tsx" || true)
+          if [ -n "$FOUND" ]; then
+            echo "::warning::Found console.log statements:"
+            echo "$FOUND"
+          fi
+
+      - name: Check file size limits
+        run: |
+          LARGE=$(find app/ components/ lib/ -name "*.ts" -o -name "*.tsx" | xargs wc -l 2>/dev/null | awk '$1 > 400 && !/total/ {print}' || true)
+          if [ -n "$LARGE" ]; then
+            echo "::warning::Files exceeding 400 lines:"
+            echo "$LARGE"
+          fi
