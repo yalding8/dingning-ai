@@ -8,27 +8,32 @@ export const metadata: Metadata = {
 
 const resources = [
   {
-    category: "AI 助手",
+    category: "AI 开发",
     items: [
       {
-        name: "Claude Pro",
-        description: "我最常用的 AI 助手。深度思考、长文写作、代码开发，全靠它。",
-        url: "https://claude.ai",
+        name: "Claude Code",
+        description: "我的核心开发工具。运行在终端里的 AI 编程助手，异乡人才、异乡点评、dingning.ai 全部用它构建。",
+        url: "https://claude.ai/download",
+      },
+      {
+        name: "OpenClaw",
+        description: "开源 CLI 工具。我参与贡献的项目之一，体现 AI + CLI 融合的趋势。",
+        url: "https://github.com/yalding8/openclaw",
       },
     ],
   },
   {
-    category: "开发工具",
+    category: "知识管理",
     items: [
       {
-        name: "Cursor",
-        description: "AI 原生代码编辑器。Vibe Coding 的核心工具，让非程序员也能写出生产级代码。",
-        url: "https://cursor.com",
+        name: "Obsidian",
+        description: "我的个人知识库。所有项目的规划文档、培训方案、文章草稿都写在这里，支持本地 Markdown、双向链接。",
+        url: "https://obsidian.md",
       },
       {
-        name: "Vercel",
-        description: "前端部署平台。push 代码自动上线，这个网站就跑在 Vercel 上。",
-        url: "https://vercel.com",
+        name: "飞书",
+        description: "团队协作和项目管理。异乡好居内部使用，文档、会议、审批一站式解决。",
+        url: "https://www.feishu.cn",
       },
     ],
   },
@@ -37,23 +42,38 @@ const resources = [
     items: [
       {
         name: "DigitalOcean",
-        description: "开发者友好的云服务器。异乡人才的后端就跑在上面。",
+        description: "开发者友好的云服务器。异乡人才的后端跑在上面，简洁好用。",
         url: "https://www.digitalocean.com",
+      },
+      {
+        name: "阿里云",
+        description: "异乡点评的生产服务器。ECS + 容器化部署，国内访问稳定。",
+        url: "https://www.aliyun.com",
+      },
+      {
+        name: "腾讯云",
+        description: "部分业务的备选云服务，微信生态对接时尤其方便。",
+        url: "https://cloud.tencent.com",
       },
     ],
   },
   {
-    category: "知识管理",
+    category: "开发与部署",
     items: [
       {
-        name: "Notion",
-        description: "团队知识库和项目管理。异乡好居全公司在用。",
-        url: "https://www.notion.so",
+        name: "Vercel",
+        description: "前端部署平台。push 代码自动上线，dingning.ai 就跑在上面。",
+        url: "https://vercel.com",
       },
       {
-        name: "Obsidian",
-        description: "个人知识管理。这个网站的规划文档就写在 Obsidian 里。",
-        url: "https://obsidian.md",
+        name: "GitHub",
+        description: "代码托管和 CI/CD。30+ 个仓库，所有项目的代码都在这里管理。",
+        url: "https://github.com/yalding8",
+      },
+      {
+        name: "Docker",
+        description: "容器化部署。异乡点评用 Docker Compose 管理 PostgreSQL、Redis、NestJS、Nuxt 等多个服务。",
+        url: "https://www.docker.com",
       },
     ],
   },
