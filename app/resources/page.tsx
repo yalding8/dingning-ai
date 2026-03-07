@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Resources",
+  title: "资源推荐",
   description: "我真正在用的 AI 工具和资源推荐。",
 };
 
@@ -64,7 +64,7 @@ export default function ResourcesPage() {
     <section className="py-16 md:py-24">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
-          Resources
+          资源推荐
         </h1>
         <p className="text-base text-[var(--text-secondary)] mb-12">
           我真正在用的工具和资源——不是广告，是实测
