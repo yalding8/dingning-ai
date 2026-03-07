@@ -1,0 +1,96 @@
+---
+title: "推荐 Docker：一个 yml 文件定义整个技术栈"
+date: "2026-03-07"
+excerpt: "用 Docker Compose 管理 PostgreSQL、Redis、NestJS、Nuxt 多个服务，开发和生产环境完全一致，再也不怕「我电脑上能跑」。"
+tags: ["推荐"]
+published: true
+featured: false
+---
+
+"在我电脑上能跑啊。"
+
+每个开发者都说过这句话，每个开发者都知道这句话有多不靠谱。
+
+开发环境用的 Node 18，服务器上装的是 Node 16。本地的 PostgreSQL 是 15，生产环境是 13。Redis 版本不一样，连默认配置都不一样。这些细微的差异，往往在你最自信的时候给你一刀。
+
+[Docker](https://www.docker.com) 解决的就是这个问题：把你的应用和它依赖的一切，打包进一个标准化的容器里。不管在哪台机器上运行，行为都一模一样。
+
+## 异乡点评的技术栈：一个 docker-compose.yml 搞定
+
+我做的"异乡点评"项目是一个留学顾问评价平台，技术栈不算简单：
+
+- NestJS 后端（TypeScript）
+- Nuxt 前端（Vue 3）
+- PostgreSQL 数据库
+- Redis 缓存（用于 Thompson Sampling 批量计算、行为信号存储、Cron 指标收集）
+
+如果不用 Docker，光是在一台新机器上把这四个服务跑起来，保守估计要折腾一两个小时。装 Node、装 PostgreSQL、装 Redis、配端口、配环境变量、建数据库、跑迁移，哪个环节出了问题都得 debug 半天。
+
+用了 [Docker](https://www.docker.com) 之后，所有这些都定义在一个 `docker-compose.yml` 文件里：
+
+```yaml
+services:
+  backend:
+    build: ./apps/backend
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgresql://...
+      REDIS_URL: redis://redis:6379
+
+  frontend:
+    build: ./apps/frontend
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:15
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+```
+
+一条 `docker compose up` 命令，四个服务全部启动，互相之间的网络连接自动建好。新同事入职？克隆仓库，跑一条命令，环境就绑好了。
+
+## 开发和生产的一致性
+
+Docker 最核心的价值不是"方便"，而是"一致"。
+
+异乡点评的生产环境部署在 DigitalOcean 的服务器上。生产环境用的也是 Docker Compose，只是多了一些生产级别的配置：healthcheck 健康检查、restart policy 自动重启、volume 数据持久化。
+
+这意味着，如果一个 bug 在生产环境出现了，我可以在本地用几乎完全相同的环境复现它。不需要猜测"是不是服务器环境不一样"，因为环境就是一样的。
+
+举个具体的例子。异乡点评的 Thompson Sampling 排序算法需要定时批量计算，用的是 NestJS 的 Cron Job，数据写入走 Prisma 的 `$transaction` 批量事务。有一次这个 Cron 在生产环境报了一个诡异的超时错误。我在本地用 `docker compose up` 启动一模一样的环境，灌入测试数据，很快就复现了问题——是 PostgreSQL 的连接池被打满了。如果没有 Docker 保证的环境一致性，这种问题排查起来会痛苦得多。
+
+## 不只是后端，数据库备份也靠它
+
+异乡点评有一个定时数据库备份脚本 `backup-db.sh`，用的是 `pg_dump`，保留最近 7 天的备份。这个脚本跑在 Docker 容器内部，直接连本地的 PostgreSQL 容器，不需要在宿主机上安装 pg_dump 工具。
+
+这是 Docker 一个容易被忽视的好处：你不需要在服务器上安装一堆工具。需要什么工具，起一个包含那个工具的容器就行。服务器本身保持干净。
+
+## Docker 的学习曲线
+
+实话实说，Docker 的学习曲线不算低。
+
+Dockerfile 的分层构建、镜像缓存机制、网络模式、Volume 挂载、多阶段构建——这些概念第一次接触的时候确实需要花时间理解。我刚开始用 Docker 的时候，光是理解"为什么 COPY 的顺序会影响构建速度"就花了不少时间。
+
+但这是一次性的学习投入。一旦理解了这些概念，后续所有项目都能受益。而且 Docker 的文档写得很好，官方的 Getting Started 教程就够入门了。
+
+另外一个建议：不要一开始就试图优化 Dockerfile。先写一个能跑的版本，等项目稳定了再去做多阶段构建、减小镜像体积这些优化。过早优化是万恶之源，Docker 也不例外。
+
+## 什么时候不需要 Docker
+
+并不是所有项目都需要 Docker。
+
+我的 dingning.ai 个人品牌站部署在 Vercel 上，纯前端项目，不需要数据库，不需要 Redis，Vercel 的零配置部署比 Docker 简单得多。硬要给这种项目加 Docker，反而是过度工程。
+
+Docker 最适合的场景是：多服务协作、有状态依赖（数据库、缓存）、需要保证环境一致性的项目。异乡点评的 NestJS + PostgreSQL + Redis 组合，就是 Docker 的最佳使用场景。
+
+## 总结
+
+[Docker](https://www.docker.com) 解决了软件开发中最古老的问题之一：环境不一致。一个 `docker-compose.yml` 定义整个技术栈，`docker compose up` 一条命令启动所有服务，开发和生产环境保持一致。
+
+学习成本存在，但回报是长期的。如果你的项目涉及多个服务的协作，Docker 不是可选项，而是必需品。

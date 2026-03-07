@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "资源推荐",
@@ -13,12 +14,12 @@ const resources = [
       {
         name: "Claude Code",
         description: "我的核心开发工具。运行在终端里的 AI 编程助手，异乡人才、异乡点评、dingning.ai 全部用它构建。",
-        url: "https://claude.ai/download",
+        slug: "recommend-claude-code",
       },
       {
         name: "OpenClaw",
-        description: "开源 CLI 工具。我参与贡献的项目之一，体现 AI + CLI 融合的趋势。",
-        url: "https://github.com/yalding8/openclaw",
+        description: "开源 AI CLI 工具，前景很好，值得关注和探讨。",
+        slug: "recommend-openclaw",
       },
     ],
   },
@@ -28,12 +29,12 @@ const resources = [
       {
         name: "Obsidian",
         description: "我的个人知识库。所有项目的规划文档、培训方案、文章草稿都写在这里，支持本地 Markdown、双向链接。",
-        url: "https://obsidian.md",
+        slug: "recommend-obsidian",
       },
       {
         name: "飞书",
         description: "团队协作和项目管理。异乡好居内部使用，文档、会议、审批一站式解决。",
-        url: "https://www.feishu.cn",
+        slug: "recommend-feishu",
       },
     ],
   },
@@ -43,17 +44,17 @@ const resources = [
       {
         name: "DigitalOcean",
         description: "开发者友好的云服务器。异乡人才的后端跑在上面，简洁好用。",
-        url: "https://www.digitalocean.com",
+        slug: "recommend-digitalocean",
       },
       {
         name: "阿里云",
         description: "异乡点评的生产服务器。ECS + 容器化部署，国内访问稳定。",
-        url: "https://www.aliyun.com",
+        slug: "recommend-aliyun",
       },
       {
         name: "腾讯云",
         description: "部分业务的备选云服务，微信生态对接时尤其方便。",
-        url: "https://cloud.tencent.com",
+        slug: "recommend-tencent-cloud",
       },
     ],
   },
@@ -63,17 +64,17 @@ const resources = [
       {
         name: "Vercel",
         description: "前端部署平台。push 代码自动上线，dingning.ai 就跑在上面。",
-        url: "https://vercel.com",
+        slug: "recommend-vercel",
       },
       {
         name: "GitHub",
         description: "代码托管和 CI/CD。30+ 个仓库，所有项目的代码都在这里管理。",
-        url: "https://github.com/yalding8",
+        slug: "recommend-github",
       },
       {
         name: "Docker",
         description: "容器化部署。异乡点评用 Docker Compose 管理 PostgreSQL、Redis、NestJS、Nuxt 等多个服务。",
-        url: "https://www.docker.com",
+        slug: "recommend-docker",
       },
     ],
   },
@@ -98,11 +99,9 @@ export default function ResourcesPage() {
               </h2>
               <div className="space-y-4">
                 {group.items.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/blog/${item.slug}`}
                     className="group flex items-start justify-between border border-[var(--border)] rounded-lg p-4
                                hover:border-[var(--border-strong)] transition-colors duration-200"
                   >
@@ -114,11 +113,11 @@ export default function ResourcesPage() {
                         {item.description}
                       </p>
                     </div>
-                    <ExternalLink
+                    <ArrowRight
                       size={14}
                       className="shrink-0 mt-1 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-200"
                     />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
