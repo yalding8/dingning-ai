@@ -10,7 +10,7 @@ export function AboutBrief() {
             关于我
           </h2>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我是 Neil Ding，异乡好居副总裁，同时也是 dingning.ai 这个一人公司的创始人。
+            我是 Ning Ding，异乡好居副总裁，同时也是 dingning.ai 这个一人网站的创始人。
             异乡好居服务全球留学生的海外住宿预订，累计服务超过
             <span className="font-medium text-[var(--text-primary)]"> 40 万</span>名客户，
             目的地超过

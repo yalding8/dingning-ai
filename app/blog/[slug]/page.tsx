@@ -54,7 +54,7 @@ export default function BlogPost({ params }: Props) {
             {post.meta.title}
           </h1>
           <div className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
-            <span>Neil Ding</span>
+            <span>Ning Ding</span>
             <span>·</span>
             <time dateTime={post.meta.date}>{post.meta.date}</time>
             <span>·</span>

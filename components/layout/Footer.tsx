@@ -11,7 +11,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-sm text-[var(--text-muted)]">
-            © {new Date().getFullYear()} Neil Ding · dingning.ai
+            © {new Date().getFullYear()} Ning Ding · dingning.ai
           </div>
 
           <div className="flex items-center gap-4">

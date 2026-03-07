@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/mdx";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Neil Ding 的 AI 实践、Vibe Coding 实录与国际教育行业思考。",
+  description: "Ning Ding 的 AI 实践、Vibe Coding 实录与国际教育行业思考。",
 };
 
 export default function BlogPage() {

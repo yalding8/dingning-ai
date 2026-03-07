@@ -5,7 +5,7 @@ import { NewsletterForm } from "@/components/ui/NewsletterForm";
 export const metadata: Metadata = {
   title: "关于我",
   description:
-    "Neil Ding，异乡好居副总裁，dingning.ai 创始人。白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。",
+    "Ning Ding，异乡好居副总裁，dingning.ai 创始人。白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。",
 };
 
 const timeline = [
@@ -44,7 +44,7 @@ export default function AboutPage() {
             <div className="w-32 h-32 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
               <Image
                 src="/images/neil-ding-placeholder.svg"
-                alt="Neil Ding"
+                alt="Ning Ding"
                 width={128}
                 height={128}
                 className="w-full h-full object-cover"
@@ -53,7 +53,7 @@ export default function AboutPage() {
           </div>
           <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
-              Neil Ding
+              Ning Ding
             </h1>
             <p className="text-base text-[var(--text-secondary)] leading-relaxed">
               异乡好居副总裁，dingning.ai 创始人。负责留学渠道部，维护超过 3 万名合作伙伴；

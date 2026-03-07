@@ -12,13 +12,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Neil Ding - dingning.ai",
-    template: "%s | Neil Ding - dingning.ai",
+    default: "Ning Ding - dingning.ai",
+    template: "%s | Ning Ding - dingning.ai",
   },
   description:
     "我不会写代码，但我用 AI 构建了三款产品。异乡好居副总裁，dingning.ai 创始人，Vibe Coder。",
   openGraph: {
-    title: "Neil Ding - dingning.ai",
+    title: "Ning Ding - dingning.ai",
     description:
       "一个国际教育老兵的 AI 实验场。白天管业务，晚上写产品。",
     url: "https://dingning.ai",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neil Ding - dingning.ai",
+    title: "Ning Ding - dingning.ai",
     description:
       "一个国际教育老兵的 AI 实验场。白天管业务，晚上写产品。",
   },

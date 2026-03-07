@@ -23,7 +23,7 @@ export function Header() {
             href="/"
             className="text-xl font-semibold text-[var(--text-primary)] tracking-tight"
           >
-            Neil Ding
+            Ning Ding
           </Link>
 
           {/* Desktop nav */}

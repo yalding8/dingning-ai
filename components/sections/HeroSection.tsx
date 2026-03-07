@@ -11,7 +11,7 @@ export function HeroSection() {
             <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
               <Image
                 src="/images/neil-ding-placeholder.svg"
-                alt="Neil Ding"
+                alt="Ning Ding"
                 width={208}
                 height={208}
                 priority
@@ -28,7 +28,7 @@ export function HeroSection() {
               但我用 AI 构建了三款产品
             </h1>
             <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
-              Neil Ding · 异乡好居副总裁 · dingning.ai 创始人
+              Ning Ding · 异乡好居副总裁 · dingning.ai 创始人
               <br className="hidden md:block" />
               白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。
             </p>
