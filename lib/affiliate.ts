@@ -1,22 +1,22 @@
 export const affiliateLinks = {
-  claude: {
-    name: "Claude Pro",
-    url: "https://claude.ai",
-    description: "我最常用的 AI 助手",
-  },
-  cursor: {
-    name: "Cursor",
-    url: "https://cursor.com",
-    description: "AI 原生代码编辑器",
+  claudeCode: {
+    name: "Claude Code",
+    url: "https://claude.ai/download",
+    description: "终端里的 AI 编程助手",
   },
   digitalocean: {
     name: "DigitalOcean",
     url: "https://www.digitalocean.com",
     description: "开发者友好的云服务器",
   },
-  notion: {
-    name: "Notion AI",
-    url: "https://www.notion.so",
-    description: "AI 驱动的知识管理工具",
+  vercel: {
+    name: "Vercel",
+    url: "https://vercel.com",
+    description: "前端部署平台",
+  },
+  obsidian: {
+    name: "Obsidian",
+    url: "https://obsidian.md",
+    description: "本地知识库",
   },
 } as const;
