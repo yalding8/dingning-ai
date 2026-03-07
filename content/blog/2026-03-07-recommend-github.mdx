@@ -1,0 +1,76 @@
+---
+title: "推荐 GitHub：不只是代码仓库，它是整个开发流程的中枢"
+date: "2026-03-07"
+excerpt: "代码托管、CI/CD、Branch Protection、开源社区——GitHub 是我所有项目的基础设施。"
+tags: ["推荐"]
+published: true
+featured: false
+---
+
+如果只能保留一个开发工具，我会毫不犹豫选 [GitHub](https://github.com)。
+
+不是因为它最酷，也不是因为没有替代品（GitLab、Bitbucket 都不差），而是因为在过去几年的实际使用中，GitHub 已经从一个"放代码的地方"变成了我整个开发流程的中枢。代码托管只是起点，CI/CD、代码审查、项目管理、自动化部署，全部围绕它展开。
+
+## 30+ 个仓库，全部在 GitHub 上
+
+我的 GitHub 账号（yalding8）上目前有 30 多个仓库，覆盖了我手头所有项目：dingning.ai 个人品牌站、异乡人才求职平台、异乡点评留学顾问评价系统，还有各种实验性的小项目。
+
+每个项目的代码、Issue 追踪、CI 配置、部署流程，都在 [GitHub](https://github.com) 上统一管理。这种集中化带来的好处是：不管切换到哪个项目，工作流程都是一致的。git push 触发 CI，CI 通过后自动部署，出问题了看 Actions 日志。不需要在不同平台之间来回跳转。
+
+## GitHub Actions：省钱又好用的 CI/CD
+
+我用 GitHub Pro，每月有 3000 分钟的 Actions 免费额度。说实话，对于我的项目规模来说，这个额度绑绑有余。
+
+拿异乡人才项目举例，我的 CI 设计是这样的：
+
+- `code-quality` 检查只在 Pull Request 时触发，不在 push to main 时重跑，省分钟数
+- 前后端质量检查拆成两个并行 Job，一个挂了不影响另一个，调试效率高
+- Dockerfile 不做完整 build，用 hadolint 做 lint 检查，大概 5 秒就跑完
+
+这套方案跑了大半年，每月实际消耗的 Actions 分钟数大概在 200-300 分钟之间，离 3000 分钟的上限还远得很。
+
+关键是，这些 CI 流程的配置文件（`.github/workflows/*.yml`）就放在代码仓库里，版本控制、代码审查、回滚，和业务代码享受完全一样的待遇。
+
+## Branch Protection：一个人也要有流程
+
+可能有人觉得，一个人做项目，还搞什么 Branch Protection？直接推 main 不就行了？
+
+我之前也这么想。直到有一次凌晨两点改异乡人才的推荐算法，自信满满地直接 push 到 main，结果 TypeScript 编译报错，线上页面白屏了十几分钟。从那以后，我给所有项目的 main 分支都加了保护规则：
+
+- 必须通过 CI 检查（Required Status Checks）
+- 必须通过 PR 合并，禁止直接 push
+- 禁止 force push
+
+GitHub Pro 支持在私有仓库上配置这些规则。配置方式也很方便，用 `gh api` 命令就能直接读写 Branch Protection 规则，不需要在网页上点来点去：
+
+```bash
+gh api repos/{owner}/{repo}/branches/main/protection
+```
+
+一个人的项目也需要流程。不是因为形式主义，而是因为凌晨两点的你，判断力确实不太行。
+
+## PR 驱动的开发习惯
+
+有了 Branch Protection 之后，所有改动都必须走 PR。这个看似增加了步骤的流程，实际上带来了几个好处：
+
+第一，每个 PR 都有独立的 CI 检查结果，合并前就知道代码能不能跑。
+
+第二，结合 Vercel 的 Preview 部署，每个 PR 都有独立的预览地址，前端改动一目了然。
+
+第三，PR 的描述和讨论记录本身就是最好的开发文档。三个月后我想知道"推荐算法的行为降权是什么时候加的、为什么加"，翻 PR 记录比翻代码注释靠谱得多。
+
+异乡人才项目的行为信号采集功能、异乡点评的 Thompson Sampling 排序算法，都是通过 PR 评审流程一步步迭代出来的。每一次改动的上下文都保留在 PR 里，这是非常宝贵的项目资产。
+
+## 开源社区的隐性价值
+
+GitHub 最容易被忽略的价值，是它背后的开源社区。
+
+遇到问题的时候，去对应项目的 Issues 里搜一下，大概率能找到有人遇到过同样的坑。Next.js 的 App Router 早期有不少奇怪的行为，我在 vercel/next.js 的 Issues 里找到了大量有用的讨论和 workaround。
+
+更重要的是，当你的代码在 GitHub 上公开时，它本身就是你技术能力的证明。对于做个人品牌来说，一个活跃的 GitHub Profile 比任何简历都有说服力。
+
+## 总结
+
+[GitHub](https://github.com) 不只是一个代码托管平台。对我来说，它是代码仓库、CI/CD 引擎、代码审查工具、项目文档库的集合体。Pro 计划每月 4 美元（年付），换来 3000 分钟 Actions、私有仓库 Branch Protection 这些能力，性价比极高。
+
+如果你是开发者，大概率已经在用 GitHub 了。但如果你还停留在"推代码"这个层面，建议花半天时间把 Actions 和 Branch Protection 配起来。这两个功能会从根本上改变你的开发质量。

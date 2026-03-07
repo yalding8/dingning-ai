@@ -1,0 +1,66 @@
+---
+title: "推荐 Vercel：推代码就上线，我的个人站就靠它"
+date: "2026-03-07"
+excerpt: "零配置部署、每个 PR 自动生成预览地址、Next.js 原生支持——Vercel 是我用过最省心的部署平台。"
+tags: ["推荐"]
+published: true
+featured: false
+---
+
+我做过不少项目的部署，从最早手动 scp 文件到服务器，到后来写 Dockerfile 再配 Nginx 反向代理，每次上线都是一套流程。能跑起来当然没问题，但每次改个文案都要走一遍 build、push、ssh、restart 的循环，说实话挺烦的。
+
+直到我把 dingning.ai 部署到 [Vercel](https://vercel.com) 上，才真正体会到"部署"这件事可以简单到什么程度。
+
+## 推代码就上线，真的就这么简单
+
+[Vercel](https://vercel.com) 的核心体验可以用一句话概括：你只管写代码、推到 GitHub，剩下的它全包了。
+
+dingning.ai 是一个 Next.js 14 项目。我在 Vercel 上连接了 GitHub 仓库之后，整个部署流程就是：
+
+1. 本地改完代码，git push
+2. Vercel 自动检测到推送，开始构建
+3. 构建完成，新版本自动上线
+
+没有 Dockerfile，没有 Nginx 配置，没有 SSH 登录服务器，没有手动 restart。第一次用的时候我甚至有点不敢相信，反复刷新了好几次确认页面确实更新了。
+
+这种体验一旦用过，就很难再回到手动部署的模式了。
+
+## Preview 部署：被低估的杀手功能
+
+很多人知道 Vercel 部署快，但我觉得它最被低估的功能是 Preview 部署。
+
+每次你在 GitHub 上创建一个 Pull Request，Vercel 会自动为这个 PR 构建一个独立的预览环境，生成一个唯一的 URL。你可以直接在浏览器里看到这个 PR 上线后的效果，不需要在本地跑 dev server，不需要合并到主分支。
+
+这个功能在我做 dingning.ai 视觉调整的时候特别有用。比如我想试一下把首页背景色从纯白改成温暖米白（#FAFAF7），我开一个分支改完推上去，Vercel 自动给我一个预览地址。我在手机上打开看看效果，觉得不错就合并，觉得不行就关掉 PR。整个过程连本地 dev server 都不用启动。
+
+对于团队协作来说，这个功能的价值更大。设计师、产品经理不需要懂技术，点开预览链接就能看到最新改动，直接在真实环境里提反馈。
+
+## 和 Next.js 的天然集成
+
+Vercel 是 Next.js 背后的公司，所以它对 Next.js 的支持是原生级别的。
+
+App Router、Server Components、ISR（增量静态再生成）、Edge Runtime——这些 Next.js 的功能在 Vercel 上都是开箱即用，不需要额外配置。dingning.ai 用的 MDX 博客系统、静态生成的文章页面、动态的 API 路由，全部在 Vercel 上跑得很顺畅。
+
+作为对比，如果你想在自己的服务器上跑 Next.js，光是配置 Node.js 版本、PM2 进程管理、Nginx 反向代理这些就要折腾半天。ISR 这种功能在自托管环境下还经常有坑。Vercel 把这些全部抹平了。
+
+## 免费额度够用吗？
+
+说实话，对于个人项目和小团队来说，Vercel 的免费额度非常慷慨。
+
+Hobby 计划包含每月 100GB 带宽、无限次部署、自动 HTTPS、自定义域名。dingning.ai 作为一个个人品牌站，流量还没大到需要升级付费计划的程度。Preview 部署也不限次数，这一点让我觉得很厚道。
+
+当然，如果你的项目是商业项目、有团队协作需求，Pro 计划每月 20 美元也不算贵，毕竟省下来的运维时间远超这个价格。
+
+## 不是所有项目都适合 Vercel
+
+公平地说，Vercel 不是万能的。
+
+我的另一个项目"异乡点评"，后端是 NestJS + PostgreSQL + Redis 的组合，用 Docker Compose 编排多个服务，部署在 DigitalOcean 的服务器上。这种有状态服务、需要数据库的后端项目，Vercel 并不适合。它本质上是为前端和 Serverless 设计的平台。
+
+所以我的实际做法是：前端项目（dingning.ai、异乡人才前端）放 Vercel，后端服务放自己的服务器用 Docker 跑。两者各司其职。
+
+## 总结
+
+如果你在做 Next.js 项目，或者任何前端项目需要一个靠谱的部署方案，[Vercel](https://vercel.com) 是我目前用下来最省心的选择。零配置、Preview 部署、免费额度慷慨，这三点就足够让它成为个人开发者的首选。
+
+我不喜欢"安利"这个词，但如果你还在手动部署前端项目，真的建议试试。用过之后你会觉得以前花在部署上的时间，有点冤枉。
