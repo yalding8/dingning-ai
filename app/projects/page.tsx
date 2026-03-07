@@ -9,29 +9,30 @@ export const metadata: Metadata = {
 const projects = [
   {
     name: "异乡好居",
-    role: "VP",
+    role: "副总裁",
     description:
-      "全球留学生住宿预订平台。服务 27 个国家、26 万留学生，累计交易规模超 70 亿。我在其中推动 AI 客服系统、智能推荐引擎和运营自动化。",
+      "全球留学生海外住宿预订平台，累计服务超 40 万名客户，覆盖 27 个国家和地区。我负责留学渠道部，维护超过 3 万名合作伙伴，推动 AI 客服系统、智能推荐引擎和运营自动化。",
     tags: ["国际教育", "AI 落地", "平台"],
     url: "https://www.uhomes.com",
   },
   {
     name: "异乡缴费",
-    role: "推动者",
+    role: "负责人",
     description:
-      "留学生海外账单支付服务。解决留学生在海外缴纳房租、学费、水电等费用的痛点。",
+      "留学生智能缴费比价平台。过去 5 年累计服务超 18 万名客户，交易金额超 75 亿。覆盖学费、房租、保险等全类型留学缴费。",
     tags: ["FinTech", "留学生服务"],
+    url: "https://www.uhomespay.com",
   },
   {
     name: "异乡人才",
-    role: "推动者",
+    role: "创建者",
     description:
       "留学生求职就业平台。AI 驱动的岗位推荐、简历优化和职业规划。用 Vibe Coding 从零构建。",
     tags: ["AI", "Vibe Coding", "求职"],
   },
   {
     name: "dingning.ai",
-    role: "CEO",
+    role: "创始人",
     description:
       "你正在看的这个网站。一个人、一台电脑、一个 AI 助手，构建个人品牌和产品矩阵。",
     tags: ["Solopreneur", "Vibe Coding"],

@@ -28,9 +28,9 @@ export function HeroSection() {
               但我用 AI 构建了三款产品
             </h1>
             <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
-              Neil Ding · 异乡好居 VP · 白天管业务，晚上写产品。
+              Neil Ding · 异乡好居副总裁 · dingning.ai 创始人
               <br className="hidden md:block" />
-              一个国际教育老兵的 AI 实验场。
+              白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。
             </p>
 
             {/* Newsletter */}
