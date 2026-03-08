@@ -16,11 +16,11 @@ export const metadata: Metadata = {
     template: "%s | Ning Ding - dingning.ai",
   },
   description:
-    "我不会写代码，但我用 AI 构建了三款产品。异乡好居副总裁，dingning.ai 创始人，Vibe Coder。",
+    "用 AI 重塑国际教育产业链。异乡好居副总裁，管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿。",
   openGraph: {
     title: "Ning Ding - dingning.ai",
     description:
-      "一个国际教育老兵的 AI 实验场。白天管业务，晚上写产品。",
+      "用 AI 重塑国际教育产业链。管理 3 万+合作伙伴，从自己的团队开始布道 AI。",
     url: "https://dingning.ai",
     siteName: "dingning.ai",
     locale: "zh_CN",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ning Ding - dingning.ai",
     description:
-      "一个国际教育老兵的 AI 实验场。白天管业务，晚上写产品。",
+      "用 AI 重塑国际教育产业链。管理 3 万+合作伙伴，从自己的团队开始布道 AI。",
   },
   metadataBase: new URL("https://dingning.ai"),
 };

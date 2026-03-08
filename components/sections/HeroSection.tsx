@@ -23,20 +23,20 @@ export function HeroSection() {
           {/* 文字内容 */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left gap-6">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-tight tracking-tight">
-              我不会写代码，
-              <br />
-              但我用 AI 构建了三款产品
+              用 AI 重塑国际教育产业链
             </h1>
             <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
               Ning Ding · 异乡好居副总裁 · dingning.ai 创始人
               <br className="hidden md:block" />
-              白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。
+              管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿。
+              <br className="hidden md:block" />
+              我正在用 AI 改变这个行业的工作方式——从自己的团队开始。
             </p>
 
             {/* Newsletter */}
             <div className="w-full max-w-md">
               <p className="text-xs text-[var(--text-muted)] mb-2">
-                每两周一封，只分享真实实践
+                每两周一封，分享 AI 在国际教育行业的真实实践
               </p>
               <NewsletterForm />
             </div>
