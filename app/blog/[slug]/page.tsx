@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
+import { mdxComponents } from "@/components/mdx/MdxComponents";
 
 export const revalidate = 3600;
 
@@ -64,7 +65,7 @@ export default function BlogPost({ params }: Props) {
 
         {/* Content */}
         <div className="prose">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={mdxComponents} />
         </div>
 
         {/* Newsletter CTA */}
