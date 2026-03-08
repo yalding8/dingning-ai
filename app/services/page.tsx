@@ -145,7 +145,7 @@ export default function ServicesPage() {
                 团队 AI 能力建设
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
-                不是教你的团队写代码，而是让他们具备"这件事可以自动化"的思维。
+                不是教你的团队写代码，而是让他们具备「这件事可以自动化」的思维。
                 第一期实训结束后，主管们已经开始主动发现新的自动化场景。
               </p>
             </div>
