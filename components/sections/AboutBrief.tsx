@@ -10,19 +10,24 @@ export function AboutBrief() {
             关于我
           </h2>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我是 Ning Ding，异乡好居副总裁，同时也是 dingning.ai 这个一人网站的创始人。
-            异乡好居服务全球留学生的海外住宿预订，累计服务超过
+            我是 Ning Ding，异乡好居副总裁，负责留学渠道部，维护超过
+            <span className="font-medium text-[var(--text-primary)]"> 3 万</span>名合作伙伴。
+            异乡好居累计服务超过
             <span className="font-medium text-[var(--text-primary)]"> 40 万</span>名客户，
-            目的地超过
+            覆盖
             <span className="font-medium text-[var(--text-primary)]"> 27 个国家和地区</span>。
-            我同时负责异乡缴费，过去 5 年累计服务超过
-            <span className="font-medium text-[var(--text-primary)]"> 18 万</span>名客户，
+            同时负责异乡缴费，5 年累计服务
+            <span className="font-medium text-[var(--text-primary)]"> 18 万</span>客户，
             交易金额超
             <span className="font-medium text-[var(--text-primary)]"> 75 亿</span>。
           </p>
+          <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+            我正在做一件事：让国际教育产业链的从业者学会用 AI 提升工作效率。
+            已经完成了第一期 Vibe Coding 实训——10 位主管，4 周 8 节课，
+            佣金分析时间从 30 分钟降到 3 分钟。
+          </p>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-6">
-            我相信一个人也可以成为一个公司。白天推动 AI 在国际教育行业的落地，
-            晚上用 Vibe Coding 亲手构建产品。这个网站记录我的实践与思考。
+            这个网站记录我的实践与思考，也是我向行业布道 AI 的阵地。
           </p>
           <Link
             href="/about"

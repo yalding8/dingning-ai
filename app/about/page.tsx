@@ -5,14 +5,15 @@ import { NewsletterForm } from "@/components/ui/NewsletterForm";
 export const metadata: Metadata = {
   title: "关于",
   description:
-    "Ning Ding，异乡好居副总裁，dingning.ai 创始人。白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。",
+    "Ning Ding，异乡好居副总裁，国际教育产业链 AI 布道者。管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿，正在用 AI 改变这个行业的工作方式。",
 };
 
 const timeline = [
   {
     year: "至今",
-    title: "dingning.ai 创始人",
-    description: "一个人也可以成为一个公司。用 AI 构建个人产品矩阵，记录实践与思考。",
+    title: "国际教育 AI 布道者",
+    description:
+      "用 dingning.ai 记录 AI 在国际教育行业的实践，推动行业从业者拥抱 AI。完成第一期 Vibe Coding 实训，10 位主管交付 4 个实际业务工具。",
   },
   {
     year: "至今",
@@ -24,13 +25,13 @@ const timeline = [
     year: "5年+",
     title: "异乡缴费负责人",
     description:
-      "累计服务超 18 万名客户留学缴费，交易金额超 75 亿。同时观察更多与异乡好居业务结合的产品方向。",
+      "累计服务超 18 万名客户留学缴费，交易金额超 75 亿。构建了中立的缴费比价平台，聚合全球 5,000+ 院校认可的官方收款渠道。",
   },
   {
-    year: "延伸",
-    title: "异乡人才 · Vibe Coding · AI 培训",
+    year: "实践",
+    title: "Vibe Coding · AI 产品构建",
     description:
-      "留学生求职就业平台（AI 驱动）。以非程序员身份用 AI 构建真实产品，在公司内部推动管理干部 AI 赋能。",
+      "以非程序员身份用 AI 构建异乡人才（10,645 个活跃岗位的留学生求职平台）、异乡点评等产品。18,000+ 行代码，505 个测试用例，全部与 AI 协作完成。",
   },
 ];
 
@@ -58,8 +59,8 @@ export default function AboutPage() {
             <p className="text-base text-[var(--text-secondary)] leading-relaxed">
               异乡好居副总裁，dingning.ai 创始人。负责留学渠道部，维护超过 3 万名合作伙伴；
               同时负责异乡缴费，5 年累计服务 18 万客户、交易 75 亿。
-              白天推动 AI 在国际教育行业的落地，晚上用 Vibe Coding 亲手构建产品。
-              我相信一个人也可以成为一个公司。
+              我正在做一件事：帮助中国国际教育产业链的从业者学会运用 AI，
+              从自己的团队开始，向整个行业布道。
             </p>
           </div>
         </div>
