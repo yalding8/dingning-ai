@@ -1,0 +1,52 @@
+# 自动博客生成配置
+
+# Claude API 设置
+claude:
+  model: "claude-sonnet-4-6"
+  max_tokens: 4096
+
+# 作者信息（用于文章风格参考）
+author:
+  name: "Ning Ding"
+  role: "异乡好居副总裁 / 国际教育 AI 布道者"
+  style_notes: |
+    写作风格：
+    - 第一人称，真实、有温度
+    - 结合个人实际案例，不空谈理论
+    - 短段落，善用列表和表格
+    - 标题直击痛点，引发共鸣
+    - 适度使用加粗强调关键信息
+    - 文末有号召或思考，不烂尾
+
+# 可选的主题方向（脚本会从 memory 中自动匹配）
+topic_categories:
+  - name: "Vibe Coding 实战"
+    tags: [Vibe Coding, AI, 实战]
+    description: "非程序员用 AI 写代码的真实体验和技巧"
+  - name: "AI 工具评测"
+    tags: [AI, 工具, 效率]
+    description: "实际使用过的 AI 工具分享和对比"
+  - name: "国际教育 + AI"
+    tags: [国际教育, AI, 行业洞察]
+    description: "AI 在留学、海外租房等场景的落地实践"
+  - name: "团队 AI 转型"
+    tags: [AI, 企业实践, 团队管理]
+    description: "带团队拥抱 AI 的经验和方法论"
+  - name: "技术架构思考"
+    tags: [技术, 架构, 产品]
+    description: "推荐引擎、评价系统等产品技术选型"
+  - name: "个人成长"
+    tags: [个人故事, 成长, 思考]
+    description: "39 岁转型、职业发展等个人感悟"
+
+# 文章生成规则
+generation:
+  # 目标字数范围
+  min_words: 1500
+  max_words: 3000
+  # 已发布文章目录（避免重复主题）
+  blog_dir: "content/blog"
+  # Memory 来源目录
+  memory_dir: "memories"
+  # 输出目录
+  output_dir: "content/blog"

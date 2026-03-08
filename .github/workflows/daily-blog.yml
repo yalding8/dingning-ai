@@ -1,0 +1,89 @@
+name: Daily Blog Post Generator
+
+on:
+  # 每天北京时间早上 8 点（UTC 0:00）自动运行
+  schedule:
+    - cron: '0 0 * * *'
+  # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: '指定文章主题（留空则自动选题）'
+        required: false
+        type: string
+      dry_run:
+        description: '仅选题不生成'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Check memories directory
+        run: |
+          count=$(find memories -name "*.md" ! -name "README.md" | wc -l)
+          echo "Found $count memory files"
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No memory files found in memories/ directory"
+            exit 1
+          fi
+
+      - name: Generate blog post
+        id: generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+          if [ -n "${{ inputs.topic }}" ]; then
+            ARGS="$ARGS --topic \"${{ inputs.topic }}\""
+          fi
+          eval python scripts/generate_blog_post.py $ARGS
+
+      - name: Create Pull Request
+        if: ${{ inputs.dry_run != 'true' }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: 自动生成博客文章 ${{ steps.generate.outputs.title }}"
+          title: "📝 每日博客: ${{ steps.generate.outputs.title }}"
+          body: |
+            ## 自动生成的博客文章
+
+            - **标题**: ${{ steps.generate.outputs.title }}
+            - **文件**: ${{ steps.generate.outputs.filename }}
+            - **生成时间**: ${{ github.event.repository.updated_at }}
+
+            ### 审核清单
+            - [ ] 文章内容准确，无事实错误
+            - [ ] 案例数据与实际一致
+            - [ ] 文章风格符合博客调性
+            - [ ] 标签分类合理
+
+            > 此 PR 由 Daily Blog Generator 自动创建，请审核后合并发布。
+          branch: auto-blog/${{ steps.generate.outputs.filename }}
+          base: main
+          labels: |
+            auto-generated
+            blog
