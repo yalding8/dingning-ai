@@ -187,9 +187,22 @@ def build_article_prompt(
 
 _usage_log: list[dict] = []
 
+# Provider 环境变量映射
+_PROVIDER_ENV_KEYS = {
+    "anthropic": "ANTHROPIC_API_KEY",
+    "deepseek": "DEEPSEEK_API_KEY",
+    "openai": "OPENAI_API_KEY",
+}
 
-def call_claude_api(prompt: str, config: dict) -> str:
-    """调用 Claude API"""
+# Provider 默认 base_url
+_PROVIDER_BASE_URLS = {
+    "deepseek": "https://api.deepseek.com",
+    "openai": "https://api.openai.com/v1",
+}
+
+
+def _call_anthropic(prompt: str, config: dict) -> tuple[str, dict]:
+    """调用 Anthropic Claude API"""
     try:
         import anthropic
     except ImportError:
@@ -202,26 +215,79 @@ def call_claude_api(prompt: str, config: dict) -> str:
         sys.exit(1)
 
     client = anthropic.Anthropic(api_key=api_key)
-    model = config.get("claude", {}).get("model", "claude-sonnet-4-6")
-    max_tokens = config.get("claude", {}).get("max_tokens", 4096)
+    model = config.get("llm", config.get("claude", {})).get("model", "claude-sonnet-4-6")
+    max_tokens = config.get("llm", config.get("claude", {})).get("max_tokens", 4096)
 
-    print(f"[INFO] 调用 Claude API (model={model})...")
     message = client.messages.create(
         model=model,
         max_tokens=max_tokens,
         messages=[{"role": "user", "content": prompt}],
     )
 
-    # 记录 token 用量
     usage = {
         "model": message.model,
         "input_tokens": message.usage.input_tokens,
         "output_tokens": message.usage.output_tokens,
     }
+    return message.content[0].text, usage
+
+
+def _call_openai_compatible(prompt: str, config: dict) -> tuple[str, dict]:
+    """调用 OpenAI 兼容 API（DeepSeek / OpenAI / 其他）"""
+    try:
+        from openai import OpenAI
+    except ImportError:
+        print("[ERROR] 请安装 openai SDK: pip install openai")
+        sys.exit(1)
+
+    llm_config = config.get("llm", config.get("claude", {}))
+    provider = llm_config.get("provider", "anthropic")
+    env_key = _PROVIDER_ENV_KEYS.get(provider, f"{provider.upper()}_API_KEY")
+    api_key = os.environ.get(env_key)
+    if not api_key:
+        print(f"[ERROR] 请设置 {env_key} 环境变量")
+        sys.exit(1)
+
+    base_url = llm_config.get("base_url", _PROVIDER_BASE_URLS.get(provider))
+    model = llm_config.get("model", "deepseek-chat")
+    max_tokens = llm_config.get("max_tokens", 4096)
+
+    client = OpenAI(api_key=api_key, base_url=base_url)
+    response = client.chat.completions.create(
+        model=model,
+        max_tokens=max_tokens,
+        messages=[{"role": "user", "content": prompt}],
+    )
+
+    usage = {
+        "model": response.model,
+        "input_tokens": response.usage.prompt_tokens,
+        "output_tokens": response.usage.completion_tokens,
+    }
+    return response.choices[0].message.content, usage
+
+
+def call_llm_api(prompt: str, config: dict) -> str:
+    """统一 LLM 调用入口，根据 provider 分发"""
+    llm_config = config.get("llm", config.get("claude", {}))
+    provider = llm_config.get("provider", "anthropic")
+    model = llm_config.get("model", "unknown")
+
+    print(f"[INFO] 调用 LLM API (provider={provider}, model={model})...")
+
+    if provider == "anthropic":
+        text, usage = _call_anthropic(prompt, config)
+    else:
+        text, usage = _call_openai_compatible(prompt, config)
+
     _usage_log.append(usage)
     print(f"[INFO] Token 用量: input={usage['input_tokens']}, output={usage['output_tokens']}")
 
-    return message.content[0].text
+    return text
+
+
+# 保持向后兼容
+call_claude_api = call_llm_api
 
 
 def get_usage_summary() -> dict:

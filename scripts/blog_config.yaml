@@ -1,9 +1,22 @@
 # 自动博客生成配置
 
-# Claude API 设置
-claude:
-  model: "claude-sonnet-4-6"
+# LLM API 设置
+# provider: "anthropic" | "deepseek" | "openai"
+# 切换模型只需修改以下三行
+llm:
+  provider: "deepseek"
+  model: "deepseek-chat"
   max_tokens: 4096
+  # base_url: "https://api.deepseek.com"  # 可选，默认按 provider 自动设置
+  #
+  # 其他 provider 配置示例：
+  # --- Anthropic Claude ---
+  # provider: "anthropic"
+  # model: "claude-sonnet-4-6"
+  #
+  # --- OpenAI ---
+  # provider: "openai"
+  # model: "gpt-4o"
 
 # 作者信息（用于文章风格参考）
 author:
