@@ -255,6 +255,13 @@ def create_mdx_file(topic: dict, content: str, output_dir: str) -> str:
     filename = f"{today}-{slug}.mdx"
     filepath = ROOT_DIR / output_dir / filename
 
+    # 处理文件名冲突：追加数字后缀
+    counter = 1
+    while filepath.exists():
+        filename = f"{today}-{slug}-{counter}.mdx"
+        filepath = ROOT_DIR / output_dir / filename
+        counter += 1
+
     # 构建 frontmatter
     tags_str = json.dumps(topic.get("tags", ["AI"]), ensure_ascii=False)
     excerpt = content[:100].replace('"', '\\"').replace("\n", " ").strip()

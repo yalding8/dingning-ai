@@ -51,15 +51,17 @@ jobs:
         id: generate
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_TOPIC: ${{ inputs.topic }}
         run: |
-          ARGS=""
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            ARGS="--dry-run"
+          ARGS=()
+          if [ "$INPUT_DRY_RUN" = "true" ]; then
+            ARGS+=("--dry-run")
           fi
-          if [ -n "${{ inputs.topic }}" ]; then
-            ARGS="$ARGS --topic \"${{ inputs.topic }}\""
+          if [ -n "$INPUT_TOPIC" ]; then
+            ARGS+=("--topic" "$INPUT_TOPIC")
           fi
-          eval python scripts/generate_blog_post.py $ARGS
+          python scripts/generate_blog_post.py "${ARGS[@]}"
 
       - name: Create Pull Request
         if: ${{ inputs.dry_run != 'true' }}
