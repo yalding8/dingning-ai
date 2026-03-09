@@ -16,7 +16,7 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: Props): Metadata {
-  const post = getPostBySlug(params.slug);
+  const post = getPostBySlug(decodeURIComponent(params.slug));
   if (!post) return {};
 
   return {
@@ -33,7 +33,8 @@ export function generateMetadata({ params }: Props): Metadata {
 }
 
 export default function BlogPost({ params }: Props) {
-  const post = getPostBySlug(params.slug);
+  const slug = decodeURIComponent(params.slug);
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   return (

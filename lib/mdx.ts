@@ -28,7 +28,7 @@ export function getAllPosts(): PostMeta[] {
 
       if (!data.published) return null;
 
-      const slug = filename.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.mdx$/, "");
+      const slug = data.slug || filename.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.mdx$/, "");
 
       return {
         slug,
@@ -55,12 +55,11 @@ export function getPostBySlug(slug: string) {
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
 
   for (const filename of files) {
-    const fileSlug = filename.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.mdx$/, "");
-    if (fileSlug !== slug) continue;
-
     const filePath = path.join(CONTENT_DIR, filename);
     const raw = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(raw);
+    const fileSlug = data.slug || filename.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.mdx$/, "");
+    if (fileSlug !== slug) continue;
 
     return {
       meta: {
