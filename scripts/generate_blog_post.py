@@ -353,11 +353,11 @@ def generate_article(topic: dict, memories: list[dict], config: dict) -> str:
 def create_mdx_file(topic: dict, content: str, output_dir: str) -> str:
     """生成 MDX 文件"""
     today = datetime.now().strftime("%Y-%m-%d")
-    # 生成 slug：取标题前几个关键词拼音或英文
-    slug = re.sub(r"[^\w\s-]", "", topic["title"])
+    # 生成 slug：只保留 ASCII 字母、数字、连字符（Vercel SSG 不支持非 ASCII 文件名路由）
+    slug = re.sub(r"[^a-zA-Z0-9\s-]", "", topic["title"])
     slug = re.sub(r"[\s]+", "-", slug).strip("-").lower()
-    # 如果 slug 全是中文字符，用日期 + auto
-    if not re.search(r"[a-z0-9]", slug):
+    # 过滤后无有效字符时，用日期 + auto
+    if not slug:
         slug = f"auto-{today}"
 
     filename = f"{today}-{slug}.mdx"
