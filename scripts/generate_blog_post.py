@@ -185,6 +185,9 @@ def build_article_prompt(
 只返回文章正文 Markdown 内容，不要 frontmatter，不要标题。"""
 
 
+_usage_log: list[dict] = []
+
+
 def call_claude_api(prompt: str, config: dict) -> str:
     """调用 Claude API"""
     try:
@@ -209,7 +212,46 @@ def call_claude_api(prompt: str, config: dict) -> str:
         messages=[{"role": "user", "content": prompt}],
     )
 
+    # 记录 token 用量
+    usage = {
+        "model": message.model,
+        "input_tokens": message.usage.input_tokens,
+        "output_tokens": message.usage.output_tokens,
+    }
+    _usage_log.append(usage)
+    print(f"[INFO] Token 用量: input={usage['input_tokens']}, output={usage['output_tokens']}")
+
     return message.content[0].text
+
+
+def get_usage_summary() -> dict:
+    """汇总所有 API 调用的 token 用量"""
+    total_input = sum(u["input_tokens"] for u in _usage_log)
+    total_output = sum(u["output_tokens"] for u in _usage_log)
+    return {
+        "calls": len(_usage_log),
+        "input_tokens": total_input,
+        "output_tokens": total_output,
+        "total_tokens": total_input + total_output,
+        "details": _usage_log,
+    }
+
+
+def save_usage_log(filepath: str, topic_title: str):
+    """将 token 用量追加到 usage log 文件"""
+    summary = get_usage_summary()
+    log_path = ROOT_DIR / "logs" / "usage.jsonl"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    entry = {
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "title": topic_title,
+        "filepath": filepath,
+        **summary,
+    }
+    with open(log_path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    print(f"[INFO] Token 用量已记录: {log_path}")
 
 
 def select_topic(memories: list[dict], existing_posts: list[dict], config: dict, specified_topic: str | None = None) -> dict:
@@ -334,17 +376,27 @@ def main():
     output_dir = gen_config.get("output_dir", "content/blog")
     filepath = create_mdx_file(topic, content, output_dir)
 
+    # 保存 token 用量日志
+    save_usage_log(filepath, topic['title'])
+    usage = get_usage_summary()
+
     print(f"\n[DONE] 文章生成完成!")
     print(f"  文件: {filepath}")
     print(f"  标题: {topic['title']}")
+    print(f"  API 调用: {usage['calls']} 次")
+    print(f"  Token: {usage['input_tokens']} input + {usage['output_tokens']} output = {usage['total_tokens']} total")
 
-    # 输出文件路径供 GitHub Actions 使用
+    # 输出供 GitHub Actions 使用
     github_output = os.environ.get("GITHUB_OUTPUT")
     if github_output:
         with open(github_output, "a") as f:
             f.write(f"filepath={filepath}\n")
             f.write(f"title={topic['title']}\n")
             f.write(f"filename={Path(filepath).name}\n")
+            f.write(f"api_calls={usage['calls']}\n")
+            f.write(f"input_tokens={usage['input_tokens']}\n")
+            f.write(f"output_tokens={usage['output_tokens']}\n")
+            f.write(f"total_tokens={usage['total_tokens']}\n")
 
 
 if __name__ == "__main__":

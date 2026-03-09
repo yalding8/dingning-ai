@@ -77,6 +77,14 @@ jobs:
             - **文件**: ${{ steps.generate.outputs.filename }}
             - **生成时间**: ${{ github.event.repository.updated_at }}
 
+            ### Token 消耗
+            | 指标 | 数值 |
+            |------|------|
+            | API 调用次数 | ${{ steps.generate.outputs.api_calls }} |
+            | Input Tokens | ${{ steps.generate.outputs.input_tokens }} |
+            | Output Tokens | ${{ steps.generate.outputs.output_tokens }} |
+            | **Total Tokens** | **${{ steps.generate.outputs.total_tokens }}** |
+
             ### 审核清单
             - [ ] 文章内容准确，无事实错误
             - [ ] 案例数据与实际一致
