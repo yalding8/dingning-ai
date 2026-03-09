@@ -64,7 +64,7 @@ jobs:
           python scripts/generate_blog_post.py "${ARGS[@]}"
 
       - name: Create Pull Request
-        if: ${{ inputs.dry_run != 'true' }}
+        if: ${{ inputs.dry_run != true }}
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
