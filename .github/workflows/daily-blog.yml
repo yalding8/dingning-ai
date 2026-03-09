@@ -65,6 +65,15 @@ jobs:
           fi
           python scripts/generate_blog_post.py "${ARGS[@]}"
 
+      - name: Content consistency check
+        if: ${{ inputs.dry_run != true }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/check_content_consistency.py --target "${{ steps.generate.outputs.filepath }}"
+
       - name: Create Pull Request
         if: ${{ inputs.dry_run != true }}
         uses: peter-evans/create-pull-request@v6

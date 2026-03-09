@@ -43,3 +43,41 @@ jobs:
             echo "::warning::Files exceeding 400 lines:"
             echo "$LARGE"
           fi
+
+  content-consistency:
+    name: Content Consistency Check
+    runs-on: ubuntu-latest
+    # 仅当博客内容变更时运行
+    if: contains(github.event.pull_request.title, '博客') || contains(github.event.pull_request.labels.*.name, 'blog')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Check blog content changed
+        id: blog-changed
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD -- content/blog/ || true)
+          if [ -z "$CHANGED" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No blog content changes detected"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Blog files changed:"
+            echo "$CHANGED"
+          fi
+
+      - name: Content consistency check
+        if: steps.blog-changed.outputs.skip != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/check_content_consistency.py --diff-base origin/main
