@@ -473,15 +473,17 @@ def select_topic(memories: list[dict], existing_posts: list[dict], config: dict,
             "angle": "用户指定主题",
         }
 
-    max_retries = 3
+    max_retries = 5
     rejected_titles: list[str] = []
+    rejected_reasons: list[str] = []
 
     for attempt in range(1, max_retries + 1):
         prompt = build_topic_selection_prompt(memories, existing_posts, config)
         if rejected_titles:
-            prompt += f"\n\n## 已被拒绝的主题（不要再选类似的）\n" + "\n".join(
-                f"- {t}" for t in rejected_titles
+            rejection_details = "\n".join(
+                f"- 「{t}」→ 被拒原因: {r}" for t, r in zip(rejected_titles, rejected_reasons)
             )
+            prompt += f"\n\n## 已被拒绝的主题（不要再选类似的！）\n{rejection_details}\n\n**重要：请选择完全不同方向的主题，不要围绕"非程序员编程"、"求职平台搭建"等已有角度。尝试技术细节、运维经验、工具对比、团队管理等新方向。**"
 
         response = call_llm_api(prompt, config)
 
@@ -507,8 +509,10 @@ def select_topic(memories: list[dict], existing_posts: list[dict], config: dict,
 
         print(f"[WARN] 第 {attempt}/{max_retries} 次选题被拒: {reason}")
         rejected_titles.append(topic["title"])
+        rejected_reasons.append(reason)
 
     print(f"[ERROR] 连续 {max_retries} 次选题均与已有文章重复，放弃生成")
+    print(f"[INFO] 被拒主题: {rejected_titles}")
     sys.exit(1)
 
 
