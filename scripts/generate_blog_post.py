@@ -112,6 +112,15 @@ _CONCEPT_TERMS = {
     "留学生", "国际教育", "留学",
 }
 
+# 概念族：同一产品/领域的概念归为一族，族内任意 2 个命中即视为同一话题
+# 注意：只放产品/领域专属词，不放通用词（如"从零"、"搭建"）
+_CONCEPT_FAMILIES = {
+    "异乡人才": {"异乡人才", "求职平台", "求职", "推荐引擎", "推荐系统", "岗位", "留学生"},
+    "异乡点评": {"异乡点评", "点评平台", "顾问评分", "评分系统"},
+    "个人品牌": {"dingning", "个人网站", "个人品牌"},
+    "vibe_coding": {"vibe coding", "非程序员", "程序员"},
+}
+
 
 def _extract_concepts(text: str) -> set[str]:
     """提取文本中的核心概念词"""
@@ -141,6 +150,21 @@ def _extract_concepts(text: str) -> set[str]:
     return found
 
 
+def _check_family_overlap(new_concepts: set[str], post_concepts: set[str]) -> tuple[bool, str]:
+    """检查两组概念是否落在同一概念族内（表明讨论同一产品/领域）"""
+    for family_name, family_terms in _CONCEPT_FAMILIES.items():
+        new_in_family = new_concepts & family_terms
+        post_in_family = post_concepts & family_terms
+        # 新主题和已有文章各有 2+ 个概念命中同一族 → 高度相关
+        if len(new_in_family) >= 2 and len(post_in_family) >= 2:
+            return True, (
+                f"概念族「{family_name}」重叠 "
+                f"(新: {', '.join(sorted(new_in_family))}; "
+                f"旧: {', '.join(sorted(post_in_family))})"
+            )
+    return False, ""
+
+
 def check_topic_similarity(new_title: str, new_tags: list[str], existing_posts: list[dict]) -> tuple[bool, str]:
     """
     检查新主题与已有文章的相似度。
@@ -153,9 +177,10 @@ def check_topic_similarity(new_title: str, new_tags: list[str], existing_posts: 
         return False, ""
 
     for post in existing_posts:
-        # 构建已有文章的概念集合（标题 + 标签 + 章节标题）
+        # 构建已有文章的概念集合（标题 + 标签 + 章节标题 + 摘要）
         post_text = post["title"] + " " + " ".join(post.get("tags", []))
         post_text += " " + " ".join(post.get("headings", []))
+        post_text += " " + post.get("excerpt", "")
         post_concepts = _extract_concepts(post_text)
 
         if not post_concepts:
@@ -165,6 +190,14 @@ def check_topic_similarity(new_title: str, new_tags: list[str], existing_posts: 
         overlap = new_concepts & post_concepts
         if not overlap:
             continue
+
+        # 概念族检查：两篇文章在同一产品/领域内各有 2+ 概念 → 重复
+        is_family_dup, family_reason = _check_family_overlap(new_concepts, post_concepts)
+        if is_family_dup:
+            return True, (
+                f"与已有文章《{post['title']}》主题重复 "
+                f"({family_reason})"
+            )
 
         # 新主题的概念被已有文章覆盖的比例
         coverage = len(overlap) / len(new_concepts)
@@ -235,6 +268,7 @@ def build_topic_selection_prompt(
 ```json
 {{
   "title": "文章标题",
+  "slug": "english-slug-for-url",
   "topic_category": "主题分类",
   "tags": ["标签1", "标签2", "标签3"],
   "outline": "简要大纲（3-5 个要点）",
@@ -242,6 +276,8 @@ def build_topic_selection_prompt(
   "angle": "切入角度说明"
 }}
 ```
+
+**slug 要求**：必须是英文小写、用连字符分隔的 URL 友好字符串（如 "recommendation-engine-architecture"）。这是文件名的一部分，禁止中文。
 
 只返回 JSON，不要其他内容。"""
 
@@ -485,10 +521,15 @@ def generate_article(topic: dict, memories: list[dict], config: dict) -> str:
 def create_mdx_file(topic: dict, content: str, output_dir: str) -> str:
     """生成 MDX 文件"""
     today = datetime.now().strftime("%Y-%m-%d")
-    # 生成 slug：只保留 ASCII 字母、数字、连字符（Vercel SSG 不支持非 ASCII 文件名路由）
-    slug = re.sub(r"[^a-zA-Z0-9\s-]", "", topic["title"])
-    slug = re.sub(r"[\s]+", "-", slug).strip("-").lower()
-    # 过滤后无有效字符时，用日期 + auto
+    # 优先使用 LLM 返回的英文 slug
+    slug = topic.get("slug", "")
+    if slug:
+        # 清洗：只保留 ASCII 字母、数字、连字符
+        slug = re.sub(r"[^a-zA-Z0-9-]", "", slug).strip("-").lower()
+    if not slug:
+        # 回退：从标题提取 ASCII 部分
+        slug = re.sub(r"[^a-zA-Z0-9\s-]", "", topic["title"])
+        slug = re.sub(r"[\s]+", "-", slug).strip("-").lower()
     if not slug:
         slug = f"auto-{today}"
 
@@ -518,6 +559,7 @@ def create_mdx_file(topic: dict, content: str, output_dir: str) -> str:
     mdx_content = f"""---
 title: "{topic['title']}"
 date: "{today}"
+slug: "{slug}"
 excerpt: "{excerpt}"
 tags: {tags_str}
 published: true
