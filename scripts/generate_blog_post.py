@@ -57,7 +57,7 @@ def load_memories(memory_dir: str) -> list[dict]:
 
 
 def load_existing_posts(blog_dir: str) -> list[dict]:
-    """读取已发布的博客文章元数据"""
+    """读取已发布的博客文章元数据和正文关键词"""
     posts = []
     blog_path = ROOT_DIR / blog_dir
     if not blog_path.exists():
@@ -66,16 +66,20 @@ def load_existing_posts(blog_dir: str) -> list[dict]:
     for filepath in sorted(blog_path.glob("*.mdx")):
         content = filepath.read_text(encoding="utf-8")
         # 解析 frontmatter
-        match = re.match(r"^---\n(.*?)\n---", content, re.DOTALL)
+        match = re.match(r"^---\n(.*?)\n---\s*\n(.*)", content, re.DOTALL)
         if not match:
             continue
         try:
             frontmatter = yaml.safe_load(match.group(1))
+            body = match.group(2)
+            # 提取二级标题作为内容摘要
+            headings = re.findall(r"^##\s+(.+)$", body, re.MULTILINE)
             posts.append({
                 "title": frontmatter.get("title", ""),
                 "date": frontmatter.get("date", ""),
                 "tags": frontmatter.get("tags", []),
                 "excerpt": frontmatter.get("excerpt", ""),
+                "headings": headings,
                 "filename": filepath.name,
             })
         except yaml.YAMLError:
@@ -84,15 +88,115 @@ def load_existing_posts(blog_dir: str) -> list[dict]:
     return posts
 
 
+# 领域核心概念词表（用于主题去重）
+_CONCEPT_TERMS = {
+    # 项目/产品
+    "异乡人才", "求职平台", "求职", "推荐引擎", "推荐系统", "岗位",
+    "异乡点评", "点评平台", "顾问评分", "评分系统",
+    "dingning", "个人网站", "个人品牌",
+    "异乡缴费", "留学缴费", "缴费",
+    # 技术
+    "thompson", "sampling", "bayesian", "贝叶斯",
+    "wilson", "pgvector", "redis", "fastapi", "nestjs",
+    "nextjs", "next", "mdx", "vercel", "docker",
+    "爬虫", "scrapy", "crawler",
+    # 方法论
+    "vibe", "coding", "gate", "review", "评审",
+    "单元测试", "测试", "unit", "test",
+    # 角色/身份
+    "非程序员", "程序员", "副总裁",
+    # 平台/工具
+    "claude", "cursor", "obsidian", "github", "飞书",
+    "digitalocean", "aliyun", "阿里云", "腾讯云",
+    # 话题
+    "留学生", "国际教育", "留学",
+}
+
+
+def _extract_concepts(text: str) -> set[str]:
+    """提取文本中的核心概念词"""
+    text_lower = text.lower()
+    found = set()
+    for term in _CONCEPT_TERMS:
+        if term.lower() in text_lower:
+            found.add(term.lower())
+    # 合并复合概念（避免拆分导致误匹配）
+    if "vibe" in found and "coding" in found:
+        found.discard("vibe")
+        found.discard("coding")
+        found.add("vibe coding")
+    if "gate" in found and "review" in found:
+        found.discard("gate")
+        found.discard("review")
+        found.add("gate review")
+    if "非程序员" in found and "程序员" in found:
+        found.discard("程序员")  # 保留更具体的"非程序员"
+    if "单元测试" in found and "测试" in found:
+        found.discard("测试")  # 保留更具体的"单元测试"
+    if "求职平台" in found and "求职" in found:
+        found.discard("求职")  # 保留更具体的"求职平台"
+    # 额外提取显著数字（3位以上，可能是项目指标）
+    for num in re.findall(r"\d{3,}", text):
+        found.add(num)
+    return found
+
+
+def check_topic_similarity(new_title: str, new_tags: list[str], existing_posts: list[dict]) -> tuple[bool, str]:
+    """
+    检查新主题与已有文章的相似度。
+    返回 (is_duplicate, reason)。
+    """
+    new_text = new_title + " " + " ".join(new_tags)
+    new_concepts = _extract_concepts(new_text)
+
+    if not new_concepts:
+        return False, ""
+
+    for post in existing_posts:
+        # 构建已有文章的概念集合（标题 + 标签 + 章节标题）
+        post_text = post["title"] + " " + " ".join(post.get("tags", []))
+        post_text += " " + " ".join(post.get("headings", []))
+        post_concepts = _extract_concepts(post_text)
+
+        if not post_concepts:
+            continue
+
+        # 概念重叠度
+        overlap = new_concepts & post_concepts
+        if not overlap:
+            continue
+
+        # 新主题的概念被已有文章覆盖的比例
+        coverage = len(overlap) / len(new_concepts)
+        # 双向 Jaccard
+        jaccard = len(overlap) / len(new_concepts | post_concepts)
+
+        # 判断规则：
+        # - 至少有 2 个概念词重叠（避免单词碰巧匹配）
+        # - 且新主题 60%+ 的核心概念已被某篇文章覆盖 → 重复
+        # - 或者 Jaccard > 50%（双方高度重叠）→ 重复
+        if len(overlap) < 2:
+            continue
+        if coverage >= 0.6 or jaccard >= 0.5:
+            return True, (
+                f"与已有文章《{post['title']}》主题重复 "
+                f"(概念覆盖={coverage:.0%}, Jaccard={jaccard:.0%}, "
+                f"共有概念: {', '.join(sorted(overlap))})"
+            )
+
+    return False, ""
+
+
 def build_topic_selection_prompt(
     memories: list[dict],
     existing_posts: list[dict],
     config: dict,
 ) -> str:
     """构建主题选择 prompt"""
-    # 已有文章列表
+    # 已有文章列表（含 excerpt 和 tags，帮助 LLM 判断语义重复）
     existing_titles = "\n".join(
-        f"- [{p['date']}] {p['title']}" for p in existing_posts
+        f"- [{p['date']}] {p['title']}  \n  摘要: {p.get('excerpt', '')[:80]}  \n  标签: {', '.join(p.get('tags', []))}"
+        for p in existing_posts
     )
 
     # Memory 摘要
@@ -122,10 +226,11 @@ def build_topic_selection_prompt(
 {topic_dirs}
 
 ## 要求
-1. 选择一个与已有文章不重复的、具体的主题
+1. **严格去重**：新主题不能与已有文章在主题、角度、核心论点上重复。即使换了标题措辞，如果讲的是同一件事（如"构建求职平台的经历"已经写过，就不能再写"如何用 AI 搭建岗位平台"），也算重复
 2. 主题要基于 memory 中的**真实案例**，不能凭空编造
 3. 标题要有吸引力，适合公众号传播
-4. 返回 JSON 格式：
+4. 优先选择已有文章**未覆盖的角度或子主题**
+5. 返回 JSON 格式：
 
 ```json
 {{
@@ -321,7 +426,7 @@ def save_usage_log(filepath: str, topic_title: str):
 
 
 def select_topic(memories: list[dict], existing_posts: list[dict], config: dict, specified_topic: str | None = None) -> dict:
-    """选择今日主题"""
+    """选择今日主题（含相似度校验和重试）"""
     if specified_topic:
         return {
             "title": specified_topic,
@@ -332,16 +437,43 @@ def select_topic(memories: list[dict], existing_posts: list[dict], config: dict,
             "angle": "用户指定主题",
         }
 
-    prompt = build_topic_selection_prompt(memories, existing_posts, config)
-    response = call_claude_api(prompt, config)
+    max_retries = 3
+    rejected_titles: list[str] = []
 
-    # 提取 JSON
-    json_match = re.search(r"\{[\s\S]*\}", response)
-    if not json_match:
-        print(f"[ERROR] 无法解析主题选择结果:\n{response}")
-        sys.exit(1)
+    for attempt in range(1, max_retries + 1):
+        prompt = build_topic_selection_prompt(memories, existing_posts, config)
+        if rejected_titles:
+            prompt += f"\n\n## 已被拒绝的主题（不要再选类似的）\n" + "\n".join(
+                f"- {t}" for t in rejected_titles
+            )
 
-    return json.loads(json_match.group())
+        response = call_llm_api(prompt, config)
+
+        # 提取 JSON
+        json_match = re.search(r"\{[\s\S]*\}", response)
+        if not json_match:
+            print(f"[ERROR] 无法解析主题选择结果:\n{response}")
+            sys.exit(1)
+
+        topic = json.loads(json_match.group())
+
+        # 程序化相似度校验
+        is_dup, reason = check_topic_similarity(
+            topic.get("title", ""),
+            topic.get("tags", []),
+            existing_posts,
+        )
+
+        if not is_dup:
+            if attempt > 1:
+                print(f"[INFO] 第 {attempt} 次选题通过去重校验")
+            return topic
+
+        print(f"[WARN] 第 {attempt}/{max_retries} 次选题被拒: {reason}")
+        rejected_titles.append(topic["title"])
+
+    print(f"[ERROR] 连续 {max_retries} 次选题均与已有文章重复，放弃生成")
+    sys.exit(1)
 
 
 def generate_article(topic: dict, memories: list[dict], config: dict) -> str:
