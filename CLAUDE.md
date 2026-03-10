@@ -49,6 +49,13 @@ Vercel SSG 静态部署不支持非 ASCII 文件名路由（中文 URL percent-e
 - 手动运行：`python scripts/check_content_consistency.py --all`
 - 检查单篇：`python scripts/check_content_consistency.py --target content/blog/xxx.mdx`
 
+## CI/CD 注意事项
+
+- **GITHUB_TOKEN 限制**：由 `peter-evans/create-pull-request` 使用 `GITHUB_TOKEN` 创建的 PR 不会触发 `code-quality.yml`（GitHub 安全策略防循环）
+- **自动博客的质量检查**：已内置在 `daily-blog.yml` 中（一致性检查 + build 验证），不依赖 Code Quality workflow
+- `code-quality.yml` 仅覆盖人工创建的 PR
+- 如需自动博客 PR 也触发 Code Quality，需要用 PAT 替代 GITHUB_TOKEN
+
 ## 技术栈
 - Next.js 14 + Tailwind CSS v3 + MDX
 - 部署：Vercel（SSG 静态生成）
