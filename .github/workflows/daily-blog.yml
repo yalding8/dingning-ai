@@ -35,8 +35,16 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
       - name: Install dependencies
-        run: pip install -r scripts/requirements.txt
+        run: |
+          pip install -r scripts/requirements.txt
+          npm ci
 
       - name: Check memories directory
         run: |
@@ -74,6 +82,10 @@ jobs:
         run: |
           python scripts/check_content_consistency.py --target "${{ steps.generate.outputs.filepath }}"
 
+      - name: Build verification
+        if: ${{ inputs.dry_run != true }}
+        run: npm run build
+
       - name: Create Pull Request
         if: ${{ inputs.dry_run != true }}
         uses: peter-evans/create-pull-request@v6
@@ -96,13 +108,17 @@ jobs:
             | Output Tokens | ${{ steps.generate.outputs.output_tokens }} |
             | **Total Tokens** | **${{ steps.generate.outputs.total_tokens }}** |
 
+            ### 质量检查
+            - ✅ 内容一致性检查通过
+            - ✅ Next.js 构建验证通过
+
             ### 审核清单
             - [ ] 文章内容准确，无事实错误
             - [ ] 案例数据与实际一致
             - [ ] 文章风格符合博客调性
             - [ ] 标签分类合理
 
-            > 此 PR 由 Daily Blog Generator 自动创建，请审核后合并发布。
+            > 此 PR 由 Daily Blog Generator 自动创建，已通过一致性检查和构建验证。请审核后合并发布。
           branch: auto-blog/${{ steps.generate.outputs.filename }}
           base: main
           labels: |

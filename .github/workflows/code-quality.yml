@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+# 注意：由 peter-evans/create-pull-request 使用 GITHUB_TOKEN 创建的 PR
+# 不会触发此 workflow（GitHub 安全策略）。
+# 自动博客的质量检查已内置在 daily-blog.yml 中，此处仅覆盖手动创建的 PR。
+
 jobs:
   quality-check:
     name: Lint & Type Check & Build
@@ -47,8 +51,6 @@ jobs:
   content-consistency:
     name: Content Consistency Check
     runs-on: ubuntu-latest
-    # 仅当博客内容变更时运行
-    if: contains(github.event.pull_request.title, '博客') || contains(github.event.pull_request.labels.*.name, 'blog')
     steps:
       - uses: actions/checkout@v4
         with:
@@ -81,3 +83,7 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python scripts/check_content_consistency.py --diff-base origin/main
+
+      - name: Skip notice
+        if: steps.blog-changed.outputs.skip == 'true'
+        run: echo "ℹ️ 本次 PR 未变更博客内容，跳过一致性检查"
