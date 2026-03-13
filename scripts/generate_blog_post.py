@@ -118,7 +118,7 @@ _CONCEPT_FAMILIES = {
     "异乡人才": {"异乡人才", "求职平台", "求职", "推荐引擎", "推荐系统", "岗位", "留学生"},
     "异乡点评": {"异乡点评", "点评平台", "顾问评分", "评分系统"},
     "个人品牌": {"dingning", "个人网站", "个人品牌"},
-    "vibe_coding": {"vibe coding", "非程序员", "程序员"},
+    "vibe_coding": {"vibe coding"},
 }
 
 
@@ -473,7 +473,7 @@ def select_topic(memories: list[dict], existing_posts: list[dict], config: dict,
             "angle": "用户指定主题",
         }
 
-    max_retries = 5
+    max_retries = 8
     rejected_titles: list[str] = []
     rejected_reasons: list[str] = []
 
