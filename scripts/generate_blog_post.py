@@ -20,6 +20,7 @@ import yaml
 import glob
 import random
 import argparse
+import datetime as dt
 from datetime import datetime
 from pathlib import Path
 
@@ -35,23 +36,27 @@ def load_config() -> dict:
 
 
 def load_memories(memory_dir: str) -> list[dict]:
-    """读取所有 memory 文件"""
+    """读取所有 memory 文件（含 auto/ 子目录的自动采集素材）"""
     memories = []
     mem_path = ROOT_DIR / memory_dir
     if not mem_path.exists():
         print(f"[WARN] Memory 目录不存在: {mem_path}")
         return memories
 
-    for filepath in sorted(mem_path.glob("*.md")):
+    # 递归读取 .md 文件（包含 auto/ 子目录）
+    for filepath in sorted(mem_path.rglob("*.md")):
         if filepath.name == "README.md":
             continue
         content = filepath.read_text(encoding="utf-8")
+        # 用相对路径作为 project 标识，区分手写和自动素材
+        rel = filepath.relative_to(mem_path)
+        project = str(rel.with_suffix("")).replace(os.sep, "/")
         memories.append({
-            "project": filepath.stem,
+            "project": project,
             "content": content,
             "filepath": str(filepath),
         })
-        print(f"[INFO] 已加载 memory: {filepath.name}")
+        print(f"[INFO] 已加载 memory: {rel}")
 
     return memories
 
@@ -244,7 +249,8 @@ def build_topic_selection_prompt(
         for t in config.get("topic_categories", [])
     )
 
-    return f"""你是 Ning Ding 的写作助手。Ning Ding 是异乡好居副总裁、国际教育 AI 布道者。
+    return f"""你是 Ning Ding 的写作助手。Ning Ding 是异乡好居副总裁、dingning.ai 主理人、国际教育 AI 布道者。
+注意：Ning Ding 的称谓是「主理人」，不要使用「创始人」。
 
 ## 你的任务
 从以下项目 memory 中，选择一个**尚未写过**的、有价值的主题，用于今天的博客文章。
@@ -314,14 +320,19 @@ def build_article_prompt(
 ## 参考素材（来自真实项目 memory）
 {relevant_memories}
 
+## 今天的日期
+{dt.date.today().isoformat()}
+
 ## 要求
 1. 字数 {min_words}-{max_words} 字
 2. 使用 Markdown 格式（二级标题 ##、三级标题 ###）
 3. 基于 memory 中的真实案例，不编造数据
-4. 第一人称叙述，口吻真诚务实
-5. 适合在公众号和个人博客同步发布
-6. 不要在文章开头写标题（标题在 frontmatter 中）
-7. 文末可加一句点睛之笔，用斜体
+4. **时间线必须真实**：严格按照 memory 中「项目时间线」的日期来叙述。异乡人才项目始于 2026 年 2 月，dingning.ai 始于 2026 年 3 月，不要编造更早的时间（如"去年"、"去年夏天"、"几个月前"等）。如果不确定具体时间，宁可不提，也不要虚构
+5. **称谓**：Ning Ding 的身份是「主理人」，不要使用「创始人」「联合创始人」等称谓
+6. 第一人称叙述，口吻真诚务实
+7. 适合在公众号和个人博客同步发布
+8. 不要在文章开头写标题（标题在 frontmatter 中）
+9. 文末可加一句点睛之笔，用斜体
 
 只返回文章正文 Markdown 内容，不要 frontmatter，不要标题。"""
 

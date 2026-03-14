@@ -55,6 +55,11 @@ jobs:
             exit 1
           fi
 
+      - name: Sync memories (collect materials)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/sync_memories.py --repos-only --days 14
+
       - name: Generate blog post
         id: generate
         env:
