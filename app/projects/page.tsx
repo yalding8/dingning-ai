@@ -32,7 +32,7 @@ const projects = [
   },
   {
     name: "dingning.ai",
-    role: "创始人",
+    role: "主理人",
     description:
       "你正在看的这个网站。一个人、一台电脑、一个 AI 助手，构建个人品牌和产品矩阵。",
     tags: ["Solopreneur", "Vibe Coding"],

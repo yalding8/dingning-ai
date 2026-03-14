@@ -44,7 +44,7 @@ export default function AboutPage() {
           <div className="shrink-0">
             <div className="w-32 h-32 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
               <Image
-                src="/images/neil-ding-placeholder.svg"
+                src="/neil-ding.jpg"
                 alt="Ning Ding"
                 width={128}
                 height={128}
@@ -57,7 +57,7 @@ export default function AboutPage() {
               Ning Ding
             </h1>
             <p className="text-base text-[var(--text-secondary)] leading-relaxed">
-              异乡好居副总裁，dingning.ai 创始人。负责留学渠道部，维护超过 3 万名合作伙伴；
+              异乡好居副总裁，dingning.ai 主理人。负责留学渠道部，维护超过 3 万名合作伙伴；
               同时负责异乡缴费，5 年累计服务 18 万客户、交易 75 亿。
               我正在做一件事：帮助中国国际教育产业链的从业者学会运用 AI，
               从自己的团队开始，向整个行业布道。
