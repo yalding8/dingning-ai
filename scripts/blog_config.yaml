@@ -52,6 +52,31 @@ topic_categories:
     tags: [个人故事, 成长, 思考]
     description: "39 岁转型、职业发展等个人感悟"
 
+# 素材采集配置
+memory_sources:
+  # 要采集动态的 GitHub 仓库（按重要性排序）
+  github_repos:
+    - name: "uhomesjob"
+      description: "AI 驱动的留学生求职平台"
+    - name: "dingning-ai"
+      description: "个人品牌网站"
+    - name: "dianping"
+      description: "顾问评价系统"
+    - name: "tuitionpay"
+      description: "留学缴费平台"
+    - name: "salary-calculator"
+      description: "薪资计算器"
+    - name: "studenthousing-skill"
+      description: "留学生租房 Alexa Skill"
+    - name: "on.uhomes.com-onboarding-web"
+      description: "异乡好居 Onboarding 系统"
+    - name: "openclaw"
+      description: "开源爬虫框架"
+    - name: "ai-coding-training"
+      description: "AI 编程培训材料"
+  # 采集最近 N 天的动态
+  sync_days: 14
+
 # 文章生成规则
 generation:
   # 目标字数范围
