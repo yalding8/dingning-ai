@@ -33,7 +33,7 @@ const resources = [
       },
       {
         name: "飞书",
-        description: "团队协作和项目管理。异乡好居内部使用，文档、会议、审批一站式解决。",
+        description: "身边朋友推荐最多的协作工具。文档、会议、审批一站式整合，口碑很好。",
         slug: "recommend-feishu",
       },
     ],
