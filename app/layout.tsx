@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Ning Ding - dingning.ai",
   },
   description:
-    "用 AI 重塑国际教育产业链。异乡好居副总裁，管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿。",
+    "用 AI 重塑国际教育产业链。异乡好居合伙人，管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿。",
   openGraph: {
     title: "Ning Ding - dingning.ai",
     description:

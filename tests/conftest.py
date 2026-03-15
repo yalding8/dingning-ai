@@ -12,7 +12,7 @@ def sample_config():
         "claude": {"model": "claude-sonnet-4-6", "max_tokens": 4096},
         "author": {
             "name": "Ning Ding",
-            "role": "异乡好居副总裁",
+            "role": "异乡好居合伙人",
             "style_notes": "第一人称，真实、有温度",
         },
         "topic_categories": [

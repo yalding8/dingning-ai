@@ -10,7 +10,7 @@ export function AboutBrief() {
             关于我
           </h2>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我是 Ning Ding，异乡好居副总裁、异乡缴费负责人。
+            我是 Ning Ding，异乡好居合伙人、异乡缴费负责人。
             在国际教育行业深耕多年，现在正做一件事：
             帮助这个行业的从业者学会用 AI 提升工作效率——从自己的团队开始。
           </p>

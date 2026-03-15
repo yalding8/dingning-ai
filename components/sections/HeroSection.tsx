@@ -26,7 +26,7 @@ export function HeroSection() {
               用 AI 重塑国际教育产业链
             </h1>
             <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
-              Ning Ding · 异乡好居副总裁 · dingning.ai 主理人
+              Ning Ding · 异乡好居合伙人 · dingning.ai 主理人
               <br className="hidden md:block" />
               管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿。
               <br className="hidden md:block" />
