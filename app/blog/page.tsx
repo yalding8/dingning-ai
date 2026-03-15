@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getAllPosts } from "@/lib/mdx";
+import { getAllTags } from "@/lib/tags";
+import { BlogList } from "@/components/ui/BlogList";
 
 export const metadata: Metadata = {
   title: "博客",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
+  const allTags = getAllTags();
 
   return (
     <section className="py-16 md:py-24">
@@ -16,42 +18,11 @@ export default function BlogPage() {
         <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
           博客
         </h1>
-        <p className="text-base text-[var(--text-secondary)] mb-12">
+        <p className="text-base text-[var(--text-secondary)] mb-8">
           AI 实践、Vibe Coding 实录与行业思考
         </p>
 
-        <div className="space-y-8">
-          {posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group block border-b border-[var(--border)] pb-8"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs text-[var(--accent)] font-medium"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                <span className="text-xs text-[var(--text-muted)]">
-                  · {post.date}
-                </span>
-                <span className="text-xs text-[var(--text-muted)]">
-                  · {post.readingTime}
-                </span>
-              </div>
-              <h2 className="text-xl font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors duration-200">
-                {post.title}
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                {post.excerpt}
-              </p>
-            </Link>
-          ))}
-        </div>
+        <BlogList posts={posts} allTags={allTags} />
       </div>
     </section>
   );
