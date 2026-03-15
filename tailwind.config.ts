@@ -22,6 +22,10 @@ const config: Config = {
           DEFAULT: "var(--accent)",
           light: "var(--accent-light)",
         },
+        cta: {
+          DEFAULT: "var(--cta)",
+          light: "var(--cta-light)",
+        },
         border: {
           DEFAULT: "var(--border)",
           strong: "var(--border-strong)",

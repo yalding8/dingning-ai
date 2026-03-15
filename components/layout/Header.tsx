@@ -52,7 +52,7 @@ export function Header() {
             ))}
             <a
               href="mailto:ceo@dingning.ai"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-[var(--accent)] hover:bg-[var(--accent-light)] px-4 py-2 rounded-lg transition-colors duration-200"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-[var(--cta)] hover:bg-[var(--cta-light)] px-4 py-2 rounded-lg transition-colors duration-200"
             >
               <Mail size={14} />
               联系我

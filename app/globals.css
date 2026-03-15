@@ -13,9 +13,13 @@
   --text-secondary:#4B5563;
   --text-muted:    #9CA3AF;
 
-  /* 强调色 */
+  /* 强调色（信息型：链接、标签、active 导航） */
   --accent:        #0F4C75;
   --accent-light:  #2980B9;
+
+  /* CTA 色（行动型：订阅、联系我等按钮） */
+  --cta:           #B45309;
+  --cta-light:     #D97706;
 
   /* 边框 */
   --border:        #E5E7EB;

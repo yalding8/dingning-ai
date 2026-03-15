@@ -125,8 +125,8 @@ export default function ServicesPage() {
             AI 落地咨询
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-6 leading-relaxed">
-            基于我在异乡好居的实践——管理 3 万+留学渠道合作伙伴、累计服务 40 万客户、
-            交易 75 亿的业务经验，帮助国际教育机构找到 AI 落地的切入点。
+            基于我在异乡好居推动 AI 落地的真实经验，帮助国际教育机构找到切入点。
+            不讲概念，只做能量化效果的事。
           </p>
 
           <div className="space-y-4">
@@ -172,31 +172,25 @@ export default function ServicesPage() {
               <li className="flex items-start gap-2">
                 <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
                 <span>
-                  异乡好居副总裁，负责留学渠道部，维护超过 3 万名合作伙伴
+                  不是外部顾问，是在自己业务上跑通 AI 的人——已落地 AI 客服、推荐引擎、数据分析自动化
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
                 <span>
-                  异乡缴费负责人，5 年累计服务 18 万客户，交易金额超 75 亿
+                  以非程序员身份用 Vibe Coding 独立构建了两个产品——证明「不会写代码」不是障碍
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
                 <span>
-                  用 Vibe Coding 独立构建了异乡人才（AI 驱动的留学生求职平台，10,645 个活跃岗位）
+                  实训方法论经过验证：首期 10 位主管全程参与，培训后工具实际使用率 80%
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
                 <span>
-                  完成第一期 AI 实训：10 位主管，4 周 8 节课，每人交付 4 个可用工具
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
-                <span>
-                  以非程序员身份，用 AI 编写了 18,000+ 行代码和 505 个测试用例
+                  沉淀了 Gate-Review 评审方法论 + Vibe Coding 开发方法，可直接复用
                 </span>
               </li>
             </ul>
