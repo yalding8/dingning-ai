@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -15,6 +16,12 @@ const navItems = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === "/blog") return pathname === "/blog" || pathname.startsWith("/blog/");
+    return pathname === href;
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-sm">
@@ -33,11 +40,23 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors duration-200"
+                className={cn(
+                  "text-sm transition-colors duration-200",
+                  isActive(item.href)
+                    ? "text-[var(--accent)] font-medium"
+                    : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                )}
               >
                 {item.label}
               </Link>
             ))}
+            <a
+              href="mailto:ceo@dingning.ai"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-[var(--accent)] hover:bg-[var(--accent-light)] px-4 py-2 rounded-lg transition-colors duration-200"
+            >
+              <Mail size={14} />
+              联系我
+            </a>
           </nav>
 
           {/* Mobile menu button */}
@@ -62,7 +81,12 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors duration-200"
+                className={cn(
+                  "text-sm transition-colors duration-200",
+                  isActive(item.href)
+                    ? "text-[var(--accent)] font-medium"
+                    : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                )}
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}

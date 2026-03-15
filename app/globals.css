@@ -15,7 +15,7 @@
 
   /* 强调色 */
   --accent:        #0F4C75;
-  --accent-light:  #1A6FA0;
+  --accent-light:  #2980B9;
 
   /* 边框 */
   --border:        #E5E7EB;
@@ -36,7 +36,7 @@ body {
 .prose {
   color: var(--text-primary);
   line-height: 1.8;
-  font-size: 1rem;
+  font-size: 1.0625rem;
 }
 
 .prose h2 {

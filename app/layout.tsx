@@ -33,6 +33,9 @@ export const metadata: Metadata = {
       "用 AI 重塑国际教育产业链。管理 3 万+合作伙伴，从自己的团队开始布道 AI。",
   },
   metadataBase: new URL("https://dingning.ai"),
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

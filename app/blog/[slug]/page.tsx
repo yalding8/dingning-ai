@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getAllPosts, getPostBySlug } from "@/lib/mdx";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/mdx";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
+import { ShareButton } from "@/components/ui/ShareButton";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 
 export const revalidate = 3600;
@@ -37,9 +40,20 @@ export default function BlogPost({ params }: Props) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
+  const { prev, next } = getAdjacentPosts(slug);
+
   return (
     <article className="py-16 md:py-24">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
+        {/* Back link */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200 mb-8"
+        >
+          <ArrowLeft size={14} />
+          返回博客
+        </Link>
+
         {/* Header */}
         <header className="mb-12">
           <div className="flex items-center gap-2 mb-4">
@@ -55,12 +69,15 @@ export default function BlogPost({ params }: Props) {
           <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4 leading-tight">
             {post.meta.title}
           </h1>
-          <div className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
-            <span>Ning Ding</span>
-            <span>·</span>
-            <time dateTime={post.meta.date}>{post.meta.date}</time>
-            <span>·</span>
-            <span>{post.meta.readingTime}</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
+              <span>Ning Ding</span>
+              <span>·</span>
+              <time dateTime={post.meta.date}>{post.meta.date}</time>
+              <span>·</span>
+              <span>{post.meta.readingTime}</span>
+            </div>
+            <ShareButton />
           </div>
         </header>
 
@@ -69,14 +86,52 @@ export default function BlogPost({ params }: Props) {
           <MDXRemote source={post.content} components={mdxComponents} />
         </div>
 
+        {/* Prev / Next navigation */}
+        <nav className="mt-16 pt-8 border-t border-[var(--border)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {prev ? (
+              <Link
+                href={`/blog/${prev.slug}`}
+                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-lg hover:border-[var(--border-strong)] transition-colors duration-200"
+              >
+                <span className="text-xs text-[var(--text-muted)] flex items-center gap-1">
+                  <ArrowLeft size={12} />
+                  上一篇
+                </span>
+                <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-200 line-clamp-1">
+                  {prev.title}
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {next ? (
+              <Link
+                href={`/blog/${next.slug}`}
+                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-lg hover:border-[var(--border-strong)] transition-colors duration-200 md:text-right"
+              >
+                <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 md:justify-end">
+                  下一篇
+                  <ArrowRight size={12} />
+                </span>
+                <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-200 line-clamp-1">
+                  {next.title}
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+        </nav>
+
         {/* Newsletter CTA */}
-        <footer className="mt-16 pt-8 border-t border-[var(--border)]">
+        <footer className="mt-8">
           <div className="bg-[var(--bg-secondary)] rounded-lg p-6 md:p-8">
             <h3 className="text-lg font-medium text-[var(--text-primary)] mb-2">
               觉得有价值？
             </h3>
             <p className="text-sm text-[var(--text-secondary)] mb-4">
-              每两周一封，只分享真实实践。不群发、不卖课。
+              每两周一封，只分享真实实践。不群发、不灌水。
             </p>
             <NewsletterForm />
           </div>

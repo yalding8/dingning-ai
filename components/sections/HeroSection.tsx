@@ -34,8 +34,11 @@ export function HeroSection() {
             </p>
 
             {/* Newsletter */}
-            <div className="w-full max-w-md">
-              <p className="text-xs text-[var(--text-muted)] mb-2">
+            <div className="w-full max-w-md bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-4">
+              <p className="text-sm font-medium text-[var(--text-primary)] mb-1">
+                订阅 AI 实践通讯
+              </p>
+              <p className="text-xs text-[var(--text-secondary)] mb-3">
                 每两周一封，分享 AI 在国际教育行业的真实实践
               </p>
               <NewsletterForm />

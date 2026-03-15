@@ -42,12 +42,12 @@ export default function AboutPage() {
         {/* 头部 */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-16">
           <div className="shrink-0">
-            <div className="w-32 h-32 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
+            <div className="w-40 h-40 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
               <Image
                 src="/neil-ding.jpg"
                 alt="Ning Ding"
-                width={128}
-                height={128}
+                width={160}
+                height={160}
                 className="w-full h-full object-cover"
               />
             </div>
