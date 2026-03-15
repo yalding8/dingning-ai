@@ -90,7 +90,7 @@ export default function AboutPage() {
         </div>
 
         {/* 联系方式 */}
-        <div className="border-t border-[var(--border)] pt-12">
+        <div id="contact" className="border-t border-[var(--border)] pt-12">
           <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
             保持联系
           </h2>
