@@ -10,30 +10,20 @@ export function AboutBrief() {
             关于我
           </h2>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我是 Ning Ding，异乡好居副总裁，负责留学渠道部，维护超过
-            <span className="font-medium text-[var(--text-primary)]"> 3 万</span>名合作伙伴。
-            异乡好居累计服务超过
-            <span className="font-medium text-[var(--text-primary)]"> 40 万</span>名客户，
-            覆盖
-            <span className="font-medium text-[var(--text-primary)]"> 27 个国家和地区</span>。
-            同时负责异乡缴费，5 年累计服务
-            <span className="font-medium text-[var(--text-primary)]"> 18 万</span>客户，
-            交易金额超
-            <span className="font-medium text-[var(--text-primary)]"> 75 亿</span>。
+            我是 Ning Ding，异乡好居副总裁、异乡缴费负责人。
+            在国际教育行业深耕多年，现在正做一件事：
+            帮助这个行业的从业者学会用 AI 提升工作效率——从自己的团队开始。
           </p>
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
-            我正在做一件事：让国际教育产业链的从业者学会用 AI 提升工作效率。
-            已经完成了第一期 Vibe Coding 实训——10 位主管，4 周 8 节课，
+            第一期 Vibe Coding 实训已完成——10 位主管，4 周 8 节课，
             佣金分析时间从 30 分钟降到 3 分钟。
-          </p>
-          <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-6">
-            这个网站记录我的实践与思考，也是我向行业布道 AI 的阵地。
+            这个网站记录我的实践与思考。
           </p>
           <Link
             href="/about"
             className="inline-flex items-center gap-1.5 text-sm text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200"
           >
-            了解更多
+            了解完整经历
             <ArrowRight size={14} />
           </Link>
         </div>
