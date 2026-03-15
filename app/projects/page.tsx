@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const projects = [
   {
     name: "异乡好居",
-    role: "副总裁",
+    role: "合伙人",
     description:
       "全球留学生海外住宿预订平台，累计服务超 40 万名客户，覆盖 27 个国家和地区。我负责留学渠道部，维护超过 3 万名合作伙伴，推动 AI 客服系统、智能推荐引擎和运营自动化。",
     tags: ["国际教育", "AI 落地", "平台"],

@@ -5,7 +5,7 @@ import { NewsletterForm } from "@/components/ui/NewsletterForm";
 export const metadata: Metadata = {
   title: "关于",
   description:
-    "Ning Ding，异乡好居副总裁，国际教育产业链 AI 布道者。管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿，正在用 AI 改变这个行业的工作方式。",
+    "Ning Ding，异乡好居合伙人，国际教育产业链 AI 布道者。管理 3 万+合作伙伴，累计服务 40 万客户、交易 75 亿，正在用 AI 改变这个行业的工作方式。",
 };
 
 const timeline = [
@@ -17,7 +17,7 @@ const timeline = [
   },
   {
     year: "至今",
-    title: "异乡好居副总裁",
+    title: "异乡好居合伙人",
     description:
       "负责留学渠道部，维护超过 3 万名合作伙伴。异乡好居服务全球留学生海外住宿预订，累计服务超 40 万名客户，覆盖 27 个国家和地区。",
   },
@@ -57,7 +57,7 @@ export default function AboutPage() {
               Ning Ding
             </h1>
             <p className="text-base text-[var(--text-secondary)] leading-relaxed">
-              异乡好居副总裁，dingning.ai 主理人。负责留学渠道部，维护超过 3 万名合作伙伴；
+              异乡好居合伙人，dingning.ai 主理人。负责留学渠道部，维护超过 3 万名合作伙伴；
               同时负责异乡缴费，5 年累计服务 18 万客户、交易 75 亿。
               我正在做一件事：帮助中国国际教育产业链的从业者学会运用 AI，
               从自己的团队开始，向整个行业布道。

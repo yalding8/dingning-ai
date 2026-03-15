@@ -109,7 +109,7 @@ _CONCEPT_TERMS = {
     "vibe", "coding", "gate", "review", "评审",
     "单元测试", "测试", "unit", "test",
     # 角色/身份
-    "非程序员", "程序员", "副总裁",
+    "非程序员", "程序员", "合伙人",
     # 平台/工具
     "claude", "cursor", "obsidian", "github", "飞书",
     "digitalocean", "aliyun", "阿里云", "腾讯云",
@@ -249,7 +249,7 @@ def build_topic_selection_prompt(
         for t in config.get("topic_categories", [])
     )
 
-    return f"""你是 Ning Ding 的写作助手。Ning Ding 是异乡好居副总裁、dingning.ai 主理人、国际教育 AI 布道者。
+    return f"""你是 Ning Ding 的写作助手。Ning Ding 是异乡好居合伙人、dingning.ai 主理人、国际教育 AI 布道者。
 注意：Ning Ding 的称谓是「主理人」，不要使用「创始人」。
 
 ## 你的任务
