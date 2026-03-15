@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/mdx";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
@@ -83,7 +84,7 @@ export default function BlogPost({ params }: Props) {
 
         {/* Content */}
         <div className="prose">
-          <MDXRemote source={post.content} components={mdxComponents} />
+          <MDXRemote source={post.content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
         </div>
 
         {/* Prev / Next navigation */}
