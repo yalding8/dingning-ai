@@ -4,8 +4,8 @@
 # provider: "anthropic" | "deepseek" | "openai"
 # 切换模型只需修改以下三行
 llm:
-  provider: "deepseek"
-  model: "deepseek-chat"
+  provider: "anthropic"
+  model: "claude-sonnet-4-6"
   max_tokens: 4096
   # base_url: "https://api.deepseek.com"  # 可选，默认按 provider 自动设置
   #
