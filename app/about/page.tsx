@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Mail } from "lucide-react";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
+import { WeChatCopyButton } from "@/components/ui/WeChatPopover";
 
 export const metadata: Metadata = {
   title: "关于",
@@ -100,15 +102,19 @@ export default function AboutPage() {
             每两周一封，只分享真实实践
           </p>
           <NewsletterForm />
-          <p className="text-xs text-[var(--text-muted)] mt-4">
-            商务合作：
-            <a
-              href="mailto:ceo@dingning.ai"
-              className="text-[var(--accent)] hover:text-[var(--accent-light)]"
-            >
-              ceo@dingning.ai
-            </a>
-          </p>
+          <div className="flex flex-col sm:flex-row gap-6 items-start mt-6">
+            <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+              <Mail size={14} />
+              商务合作：
+              <a
+                href="mailto:ceo@dingning.ai"
+                className="text-[var(--accent)] hover:text-[var(--accent-light)]"
+              >
+                ceo@dingning.ai
+              </a>
+            </div>
+            <WeChatCopyButton />
+          </div>
         </div>
       </div>
     </section>
