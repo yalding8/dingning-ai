@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Mail } from "lucide-react";
+import { WeChatCopyButton } from "@/components/ui/WeChatPopover";
 
 export const metadata: Metadata = {
   title: "服务",
@@ -206,7 +206,7 @@ export default function ServicesPage() {
           <p className="text-sm text-[var(--text-secondary)] mb-6">
             如果你是留学机构、渠道商或院校代表，想了解 AI 如何在你的业务中落地，欢迎联系。
           </p>
-          <div className="flex flex-col sm:flex-row gap-8 items-start">
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
             <a
               href="mailto:ceo@dingning.ai"
               className="inline-flex items-center gap-2 text-sm text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200"
@@ -214,16 +214,7 @@ export default function ServicesPage() {
               <Mail size={16} />
               ceo@dingning.ai
             </a>
-            <div className="flex flex-col items-center gap-2">
-              <Image
-                src="/images/wechat-qr.png"
-                alt="微信二维码"
-                width={160}
-                height={160}
-                className="rounded-lg border border-[var(--border)]"
-              />
-              <span className="text-xs text-[var(--text-muted)]">微信扫码添加</span>
-            </div>
+            <WeChatCopyButton />
           </div>
         </div>
       </div>

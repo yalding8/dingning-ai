@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Mail } from "lucide-react";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
+import { WeChatCopyButton } from "@/components/ui/WeChatPopover";
 
 export const metadata: Metadata = {
   title: "关于",
@@ -112,16 +113,7 @@ export default function AboutPage() {
                 ceo@dingning.ai
               </a>
             </div>
-            <div className="flex flex-col items-center gap-2">
-              <Image
-                src="/images/wechat-qr.png"
-                alt="微信二维码"
-                width={140}
-                height={140}
-                className="rounded-lg border border-[var(--border)]"
-              />
-              <span className="text-xs text-[var(--text-muted)]">微信扫码添加</span>
-            </div>
+            <WeChatCopyButton />
           </div>
         </div>
       </div>

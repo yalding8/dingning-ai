@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+
+const WECHAT_ID = "dingningdocai";
 
 // WeChat SVG icon matching lucide-react style (24x24, stroke-based)
-function WeChatIcon({ size = 18 }: { size?: number }) {
+export function WeChatIcon({ size = 18 }: { size?: number }) {
   return (
     <svg
       width={size}
@@ -26,8 +27,35 @@ function WeChatIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+export function WeChatCopyButton() {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(WECHAT_ID);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <span className="inline-flex items-center gap-2">
+      <WeChatIcon size={16} />
+      <span className="text-sm text-[var(--text-secondary)]">
+        微信：{WECHAT_ID}
+      </span>
+      <button
+        onClick={handleCopy}
+        type="button"
+        className="text-xs px-2 py-0.5 rounded border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors duration-200"
+      >
+        {copied ? "已复制" : "复制"}
+      </button>
+    </span>
+  );
+}
+
 export function WeChatPopover({ iconSize = 18 }: { iconSize?: number }) {
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,6 +70,12 @@ export function WeChatPopover({ iconSize = 18 }: { iconSize?: number }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
+  async function handleCopy() {
+    await navigator.clipboard.writeText(WECHAT_ID);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
   return (
     <div className="relative" ref={popoverRef}>
       <button
@@ -53,19 +87,19 @@ export function WeChatPopover({ iconSize = 18 }: { iconSize?: number }) {
         <WeChatIcon size={iconSize} />
       </button>
       {open && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl shadow-lg p-3 flex flex-col items-center gap-2 animate-in fade-in">
-          <Image
-            src="/images/wechat-qr.png"
-            alt="微信二维码"
-            width={160}
-            height={160}
-            className="rounded-lg"
-          />
-          <span className="text-xs text-[var(--text-muted)] whitespace-nowrap">微信扫码添加</span>
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl shadow-lg p-3 flex items-center gap-2 animate-in fade-in">
+          <span className="text-sm text-[var(--text-secondary)] whitespace-nowrap">
+            {WECHAT_ID}
+          </span>
+          <button
+            onClick={handleCopy}
+            type="button"
+            className="text-xs px-2 py-0.5 rounded border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors duration-200 whitespace-nowrap"
+          >
+            {copied ? "已复制" : "复制"}
+          </button>
         </div>
       )}
     </div>
   );
 }
-
-export { WeChatIcon };
