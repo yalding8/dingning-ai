@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { Github, Mail } from "lucide-react";
-
-const socialLinks = [
-  { label: "GitHub", href: "https://github.com/yalding8", icon: Github },
-  { label: "Email", href: "mailto:ceo@dingning.ai", icon: Mail },
-];
+import { WeChatPopover } from "@/components/ui/WeChatPopover";
 
 const siteLinks = [
   { label: "博客", href: "/blog" },
@@ -56,18 +52,23 @@ export function Footer() {
                 ceo@dingning.ai
               </a>
               <div className="flex items-center gap-3 mt-2">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200"
-                    aria-label={link.label}
-                  >
-                    <link.icon size={18} />
-                  </a>
-                ))}
+                <a
+                  href="https://github.com/yalding8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200"
+                  aria-label="GitHub"
+                >
+                  <Github size={18} />
+                </a>
+                <a
+                  href="mailto:ceo@dingning.ai"
+                  className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200"
+                  aria-label="Email"
+                >
+                  <Mail size={18} />
+                </a>
+                <WeChatPopover iconSize={18} />
               </div>
             </div>
           </div>

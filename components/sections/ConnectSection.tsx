@@ -1,11 +1,7 @@
-import { Github, Mail, BookOpen } from "lucide-react";
+import Image from "next/image";
+import { Github, Mail } from "lucide-react";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
-
-const socialLinks = [
-  { label: "微信公众号", description: "深度内容", icon: BookOpen, href: undefined as string | undefined },
-  { label: "GitHub", description: "开源项目", icon: Github, href: "https://github.com/yalding8" },
-  { label: "Email", description: "商务合作", icon: Mail, href: "mailto:ceo@dingning.ai" },
-];
+import { WeChatIcon } from "@/components/ui/WeChatPopover";
 
 export function ConnectSection() {
   return (
@@ -23,25 +19,40 @@ export function ConnectSection() {
             <NewsletterForm />
           </div>
 
-          {/* 社交链接 */}
-          <div className="flex items-center justify-center gap-8">
-            {socialLinks.map((link) => {
-              const Tag = link.href ? "a" : "span";
-              const extraProps = link.href
-                ? { href: link.href, target: "_blank" as const, rel: "noopener noreferrer" }
-                : {};
-              return (
-                <Tag
-                  key={link.label}
-                  {...extraProps}
-                  className="flex flex-col items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200 cursor-default"
-                  title={!link.href ? "搜索公众号：dingning-ai" : undefined}
-                >
-                  <link.icon size={20} />
-                  <span className="text-xs">{link.label}</span>
-                </Tag>
-              );
-            })}
+          {/* 社交链接 + 微信二维码 */}
+          <div className="flex flex-col items-center gap-8">
+            <div className="flex items-center justify-center gap-8">
+              <a
+                href="https://github.com/yalding8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200"
+              >
+                <Github size={20} />
+                <span className="text-xs">GitHub</span>
+              </a>
+              <a
+                href="mailto:ceo@dingning.ai"
+                className="flex flex-col items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200"
+              >
+                <Mail size={20} />
+                <span className="text-xs">Email</span>
+              </a>
+              <div className="flex flex-col items-center gap-2 text-[var(--text-muted)]">
+                <WeChatIcon size={20} />
+                <span className="text-xs">微信</span>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Image
+                src="/images/wechat-qr.png"
+                alt="微信二维码"
+                width={160}
+                height={160}
+                className="rounded-lg border border-[var(--border)]"
+              />
+              <span className="text-xs text-[var(--text-muted)]">微信扫码添加</span>
+            </div>
           </div>
         </div>
       </div>

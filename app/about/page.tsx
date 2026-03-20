@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Mail } from "lucide-react";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 export const metadata: Metadata = {
@@ -100,15 +101,28 @@ export default function AboutPage() {
             每两周一封，只分享真实实践
           </p>
           <NewsletterForm />
-          <p className="text-xs text-[var(--text-muted)] mt-4">
-            商务合作：
-            <a
-              href="mailto:ceo@dingning.ai"
-              className="text-[var(--accent)] hover:text-[var(--accent-light)]"
-            >
-              ceo@dingning.ai
-            </a>
-          </p>
+          <div className="flex flex-col sm:flex-row gap-6 items-start mt-6">
+            <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+              <Mail size={14} />
+              商务合作：
+              <a
+                href="mailto:ceo@dingning.ai"
+                className="text-[var(--accent)] hover:text-[var(--accent-light)]"
+              >
+                ceo@dingning.ai
+              </a>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Image
+                src="/images/wechat-qr.png"
+                alt="微信二维码"
+                width={140}
+                height={140}
+                className="rounded-lg border border-[var(--border)]"
+              />
+              <span className="text-xs text-[var(--text-muted)]">微信扫码添加</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
