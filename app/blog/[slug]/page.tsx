@@ -43,8 +43,30 @@ export default function BlogPost({ params }: Props) {
 
   const { prev, next } = getAdjacentPosts(slug);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.meta.title,
+    datePublished: post.meta.date,
+    author: {
+      "@type": "Person",
+      name: "Ning Ding",
+      url: "https://dingning.ai/about",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "dingning.ai",
+      url: "https://dingning.ai",
+    },
+  };
+
   return (
-    <article className="py-16 md:py-24">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <article className="py-16 md:py-24">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Back link */}
         <Link
@@ -139,5 +161,6 @@ export default function BlogPost({ params }: Props) {
         </footer>
       </div>
     </article>
+    </>
   );
 }
