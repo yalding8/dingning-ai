@@ -160,12 +160,9 @@ function DifficultyStars({ level }: { level: 1 | 2 | 3 }) {
 
 function AudienceTag({ audience }: { audience: Audience }) {
   const colorMap: Record<Audience, string> = {
-    "非程序员":
-      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
-    "有技术背景":
-      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-    "通用":
-      "bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300",
+    "非程序员": "bg-emerald-50 text-emerald-700 border border-emerald-200",
+    "有技术背景": "bg-sky-50 text-sky-700 border border-sky-200",
+    "通用": "bg-amber-50 text-amber-700 border border-amber-200",
   };
 
   return (
