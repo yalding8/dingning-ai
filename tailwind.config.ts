@@ -33,7 +33,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-inter)",
+          "var(--font-noto-sans-sc)",
           "PingFang SC",
           "Hiragino Sans GB",
           "Microsoft YaHei",
