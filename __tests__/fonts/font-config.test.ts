@@ -3,7 +3,8 @@ import config from "@/tailwind.config";
 
 describe("font configuration", () => {
   it("font-family stack includes Inter, Noto Sans SC, and system fallbacks in correct order", () => {
-    const sans = config.theme?.extend?.fontFamily?.sans as string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sans = (config.theme?.extend?.fontFamily as any)?.sans as string[];
     expect(sans).toBeDefined();
 
     const interIndex = sans.findIndex((f) => f === "var(--font-inter)");
