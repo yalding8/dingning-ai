@@ -8,6 +8,7 @@ import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/mdx";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
+import { ViewCounter } from "@/components/ui/ViewCounter";
 
 export const revalidate = 3600;
 
@@ -99,6 +100,8 @@ export default function BlogPost({ params }: Props) {
               <time dateTime={post.meta.date}>{post.meta.date}</time>
               <span>·</span>
               <span>{post.meta.readingTime}</span>
+              <span>·</span>
+              <ViewCounter slug={slug} />
             </div>
             <ShareButton />
           </div>

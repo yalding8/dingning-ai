@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@next/mdx": "^16.1.6",
+    "@upstash/redis": "^1.37.0",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.577.0",
