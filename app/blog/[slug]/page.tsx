@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/mdx";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
-import { ShareButton } from "@/components/ui/ShareButton";
+import { ShareMenu } from "@/components/ui/ShareMenu";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { ViewCounter } from "@/components/ui/ViewCounter";
 
@@ -103,7 +103,11 @@ export default function BlogPost({ params }: Props) {
               <span>·</span>
               <ViewCounter slug={slug} />
             </div>
-            <ShareButton />
+            <ShareMenu
+              url={`https://dingning.ai/blog/${slug}`}
+              title={post.meta.title}
+              excerpt={post.meta.excerpt}
+            />
           </div>
         </header>
 
