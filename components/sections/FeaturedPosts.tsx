@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getFeaturedPosts } from "@/lib/mdx";
+import { PostViewCount } from "@/components/ui/PostViewCount";
 
 export function FeaturedPosts() {
   const featuredPosts = getFeaturedPosts();
@@ -28,8 +29,9 @@ export function FeaturedPosts() {
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
                 {post.excerpt}
               </p>
-              <span className="text-xs text-[var(--text-muted)]">
+              <span className="text-xs text-[var(--text-muted)] flex items-center gap-2">
                 {post.date}
+                <PostViewCount slug={post.slug} />
               </span>
             </Link>
           ))}

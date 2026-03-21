@@ -11,6 +11,7 @@ Ning Ding 的个人品牌网站 — 用 AI 重塑国际教育产业链。
 - **内容：** MDX 博客文章（`content/blog/`），remark-gfm 支持表格等 GFM 语法
 - **部署：** Vercel（HKG1 region）
 - **测试：** Vitest + React Testing Library（45 个用例）
+- **Newsletter：** Buttondown（`fetch` 直调 REST API，无 SDK 依赖）
 
 ## 站点结构
 
@@ -33,6 +34,14 @@ npm run build   # 生产构建
 npm test        # 运行测试（Vitest）
 npm run lint    # ESLint 检查
 ```
+
+### 环境变量
+
+| 变量 | 说明 | 必需 |
+|------|------|------|
+| `BUTTONDOWN_API_KEY` | Buttondown Newsletter 订阅 API 密钥 | 否（未配置时订阅请求仅打印日志） |
+| `UPSTASH_REDIS_REST_URL` | Upstash Redis REST URL（文章阅读量追踪） | 否（未配置时阅读量返回 0） |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST Token | 否（同上） |
 
 ## 博客文章规范
 
