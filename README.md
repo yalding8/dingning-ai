@@ -12,6 +12,7 @@ Ning Ding 的个人品牌网站 — 用 AI 重塑国际教育产业链。
 - **部署：** Vercel（HKG1 region）
 - **测试：** Vitest + React Testing Library（45 个用例）
 - **Newsletter：** Buttondown（`fetch` 直调 REST API，无 SDK 依赖）
+- **数据分析：** Vercel Analytics（页面性能 + Web Vitals）+ Google Analytics 4（用户行为 + 实时监控）
 
 ## 站点结构
 
@@ -42,6 +43,7 @@ npm run lint    # ESLint 检查
 | `BUTTONDOWN_API_KEY` | Buttondown Newsletter 订阅 API 密钥 | 否（未配置时订阅请求仅打印日志） |
 | `UPSTASH_REDIS_REST_URL` | Upstash Redis REST URL（文章阅读量追踪） | 否（未配置时阅读量返回 0） |
 | `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST Token | 否（同上） |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 Measurement ID | 否（未配置时不加载 GA4） |
 
 ## 博客文章规范
 
@@ -66,6 +68,12 @@ npm run lint    # ESLint 检查
 - **Vercel**：push to main 自动部署
 
 ## 近期更新
+
+### 2026-03-23 接入 Vercel Analytics + GA4 数据分析
+
+- Vercel Analytics：页面访问量、Web Vitals 性能指标
+- Google Analytics 4：实时访客监控、页面热度排行、点击事件追踪、流量来源分析
+
 
 ### 2026-03-15 内容真实性审计 + 品牌安全防线
 
