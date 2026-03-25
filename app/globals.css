@@ -29,11 +29,47 @@
   --success:       #059669;
   --warning:       #D97706;
   --error:         #DC2626;
+
+  /* 卡片悬停阴影 */
+  --card-shadow:   0 4px 24px -4px rgba(15, 76, 117, 0.08);
+
+  /* 渐变 */
+  --gradient-accent: linear-gradient(135deg, #0F4C75, #2980B9);
+  --gradient-cta:    linear-gradient(135deg, #B45309, #D97706);
+}
+
+.dark {
+  --bg-primary:    #0F1117;
+  --bg-secondary:  #1A1D27;
+  --bg-tertiary:   #252833;
+
+  --text-primary:  #F0F0F0;
+  --text-secondary:#A1A8B8;
+  --text-muted:    #6B7280;
+
+  --accent:        #4DA8DA;
+  --accent-light:  #6BC0E8;
+
+  --cta:           #E5930D;
+  --cta-light:     #F0A830;
+
+  --border:        #2A2D3A;
+  --border-strong: #3A3D4A;
+
+  --success:       #34D399;
+  --warning:       #FBBF24;
+  --error:         #F87171;
+
+  --card-shadow:   0 4px 24px -4px rgba(77, 168, 218, 0.1);
+
+  --gradient-accent: linear-gradient(135deg, #4DA8DA, #6BC0E8);
+  --gradient-cta:    linear-gradient(135deg, #E5930D, #F0A830);
 }
 
 body {
   color: var(--text-primary);
   background: var(--bg-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* MDX prose styling */
@@ -116,11 +152,16 @@ body {
   background: #1a1a2e;
   color: #e0e0e0;
   padding: 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow-x: auto;
   margin: 1.5rem 0;
   font-size: 0.875rem;
   line-height: 1.6;
+  border: 1px solid var(--border);
+}
+
+.dark .prose pre {
+  background: #0d0d1a;
 }
 
 .prose pre code {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navItems = [
   { label: "博客", href: "/blog" },
@@ -75,9 +76,13 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
+              <ThemeToggle />
               <Link
                 href="/about#contact"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-[var(--cta)] hover:bg-[var(--cta-light)] px-4 py-2 rounded-lg transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white
+                           bg-gradient-to-r from-[var(--cta)] to-[var(--cta-light)]
+                           hover:shadow-lg hover:shadow-[var(--cta)]/20
+                           px-4 py-2 rounded-lg transition-all duration-200"
               >
                 <Mail size={14} />
                 联系我
@@ -117,14 +122,20 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/about#contact"
-                className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-white bg-[var(--cta)] hover:bg-[var(--cta-light)] px-4 py-2.5 rounded-lg transition-colors duration-200 mt-2"
-                onClick={() => setIsOpen(false)}
-              >
-                <Mail size={14} />
-                联系我
-              </Link>
+              <div className="flex items-center justify-between mt-2">
+                <ThemeToggle />
+                <Link
+                  href="/about#contact"
+                  className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-white
+                             bg-gradient-to-r from-[var(--cta)] to-[var(--cta-light)]
+                             hover:shadow-lg hover:shadow-[var(--cta)]/20
+                             px-4 py-2.5 rounded-lg transition-all duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Mail size={14} />
+                  联系我
+                </Link>
+              </div>
             </div>
           </nav>
         </div>

@@ -212,7 +212,7 @@ function ResourceCard({ item }: { item: ResourceItem }) {
   );
 
   const className =
-    "group flex items-start justify-between border border-[var(--border)] rounded-lg p-4 hover:border-[var(--border-strong)] transition-colors duration-200";
+    "group flex items-start justify-between border border-[var(--border)] rounded-xl p-4 hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300";
 
   if (isExternal) {
     return (
@@ -236,7 +236,7 @@ function ResourceCard({ item }: { item: ResourceItem }) {
 
 export default function ResourcesPage() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
           资源推荐
