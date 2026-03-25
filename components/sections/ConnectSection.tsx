@@ -4,8 +4,11 @@ import { WeChatCopyButton } from "@/components/ui/WeChatPopover";
 
 export function ConnectSection() {
   return (
-    <section className="py-16 md:py-24 bg-[var(--bg-secondary)]">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+    <section className="relative py-20 md:py-28 bg-[var(--bg-secondary)] overflow-hidden">
+      {/* Decorative gradient */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-gradient-to-b from-[var(--accent)]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-primary)] mb-3">
             每两周，一封来自 AI 实验场的信

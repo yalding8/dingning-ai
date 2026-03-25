@@ -39,28 +39,31 @@ const timeline = [
 
 export default function AboutPage() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         {/* 头部 */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-16">
           <div className="shrink-0">
-            <div className="w-40 h-40 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border)] overflow-hidden">
-              <Image
-                src="/neil-ding.jpg"
-                alt="Ning Ding"
-                width={160}
-                height={160}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAACKADAAQAAAABAAAACgAAAAD/wAARCAAKAAgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwACAgICAgIDAgIDBQMDAwUGBQUFBQYIBgYGBgYICggICAgICAoKCgoKCgoKDAwMDAwMDg4ODg4PDw8PDw8PDw8P/9sAQwECAgIEBAQHBAQHEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/90ABAAB/9oADAMBAAIRAxEAPwDyzwb4i1zxRpVp4QWT7H47uWaZllklgsmRVjKREjJRiikHjCuCuPmrvv8AhWv7QX9zR/8Awazf/G6+I28VeKLfwrE0GsXkZeK4YlbiRcsJ8gnDdQec+tcD/wAJ/wCO/wDoY9S/8DJv/iq+aVCndrlR+p43EwUkqcWlbvf57H//2Q=="
-                className="w-full h-full object-cover"
-              />
+            <div className="relative">
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--cta)] opacity-20 blur-md" />
+              <div className="relative w-40 h-40 rounded-full bg-[var(--bg-tertiary)] border-2 border-[var(--border-strong)] overflow-hidden">
+                <Image
+                  src="/neil-ding.jpg"
+                  alt="Ning Ding"
+                  width={160}
+                  height={160}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAACKADAAQAAAABAAAACgAAAAD/wAARCAAKAAgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwACAgICAgIDAgIDBQMDAwUGBQUFBQYIBgYGBgYICggICAgICAoKCgoKCgoKDAwMDAwMDg4ODg4PDw8PDw8PDw8P/9sAQwECAgIEBAQHBAQHEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/90ABAAB/9oADAMBAAIRAxEAPwDyzwb4i1zxRpVp4QWT7H47uWaZllklgsmRVjKREjJRiikHjCuCuPmrvv8AhWv7QX9zR/8Awazf/G6+I28VeKLfwrE0GsXkZeK4YlbiRcsJ8gnDdQec+tcD/wAJ/wCO/wDoY9S/8DJv/iq+aVCndrlR+p43EwUkqcWlbvf57H//2Q=="
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
           <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
               Ning Ding
             </h1>
-            <p className="text-base text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
               异乡好居合伙人，dingning.ai 主理人。负责留学渠道部，维护超过 3 万名合作伙伴；
               同时负责异乡缴费，5 年累计服务 18 万客户、交易 75 亿。
               我正在做一件事：帮助中国国际教育产业链的从业者学会运用 AI，
@@ -73,15 +76,16 @@ export default function AboutPage() {
         <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-8">
           我的经历
         </h2>
-        <div className="space-y-8 mb-16">
+        <div className="space-y-0 mb-16">
           {timeline.map((item, index) => (
-            <div key={index} className="flex gap-6">
-              <div className="shrink-0 w-16 text-right">
+            <div key={index} className="flex gap-6 group">
+              <div className="shrink-0 w-16 text-right pt-1">
                 <span className="text-xs font-medium text-[var(--accent)]">
                   {item.year}
                 </span>
               </div>
-              <div className="border-l border-[var(--border)] pl-6 pb-2">
+              <div className="relative border-l-2 border-[var(--border)] pl-6 pb-8 last:pb-0 group-hover:border-[var(--accent)]/40 transition-colors duration-300">
+                <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[var(--border)] group-hover:bg-[var(--accent)] transition-colors duration-300" />
                 <h3 className="text-base font-medium text-[var(--text-primary)] mb-1">
                   {item.title}
                 </h3>

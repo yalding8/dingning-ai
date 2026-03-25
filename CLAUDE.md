@@ -115,3 +115,25 @@ AI 最危险的虚构不是明显的错误，而是"看起来很合理的推测"
 - 部署：Vercel（SSG 静态生成）
 - 博客内容：`content/blog/` 目录下的 `.mdx` 文件
 - slug 逻辑：`lib/mdx.ts`（优先 frontmatter slug，否则从文件名去日期前缀）
+
+## Design Context
+
+> 完整设计规范见 `.impeccable.md`，以下为核心摘要。
+
+### 品牌个性
+**创新 · 果断 · 前沿** — 自信但不傲慢，数据驱动但有温度，技术前沿但接地气。
+
+### 情绪目标
+信任感 + 启发感 + 专业敬畏 + 亲近感
+
+### 视觉方向
+- 现代科技感 + 内容优先的简洁排版，不追求花哨但要有视觉冲击力
+- **不想要**：过于朴素/学术风
+- **主题**：同时支持 Light 和 Dark mode
+
+### 设计原则
+1. **Content is King, Design is Amplifier** — 设计服务于阅读体验和转化目标
+2. **Confident, Not Loud** — 大胆排版 + 精准色彩 + 充足留白，不堆叠装饰
+3. **Data-Grounded Trust** — 重要指标突出但不浮夸
+4. **Dual-Theme Ready** — 所有颜色通过 CSS 变量，Dark mode 独立调优
+5. **Chinese-First, Bilingual-Ready** — 排版以中文阅读为主优化，font-weight 不超过 600

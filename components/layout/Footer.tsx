@@ -12,7 +12,7 @@ const siteLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--bg-secondary)]">
+    <footer className="border-t border-[var(--border)] bg-[var(--bg-secondary)] transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}

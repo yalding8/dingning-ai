@@ -54,16 +54,18 @@ export function NewsletterForm() {
           placeholder="your@email.com"
           required
           disabled={status === "loading"}
-          className="flex-1 px-4 py-2.5 text-sm bg-white border border-[var(--border)] rounded-lg
+          className="flex-1 px-4 py-2.5 text-sm bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg
                      text-[var(--text-primary)] placeholder:text-[var(--text-muted)]
-                     focus:outline-none focus:border-[var(--accent)] transition-colors duration-200
-                     disabled:opacity-50"
+                     focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20
+                     transition-all duration-200 disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="px-4 py-2.5 text-sm font-medium text-white bg-[var(--cta)] rounded-lg
-                     hover:bg-[var(--cta-light)] transition-colors duration-200
+          className="px-4 py-2.5 text-sm font-medium text-white rounded-lg
+                     bg-gradient-to-r from-[var(--cta)] to-[var(--cta-light)]
+                     hover:shadow-lg hover:shadow-[var(--cta)]/20
+                     transition-all duration-200
                      flex items-center gap-2 disabled:opacity-50"
         >
           {status === "loading" ? (

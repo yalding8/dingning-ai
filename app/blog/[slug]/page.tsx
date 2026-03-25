@@ -67,7 +67,7 @@ export default function BlogPost({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <article className="py-16 md:py-24">
+      <article className="py-20 md:py-28">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Back link */}
         <Link
@@ -84,7 +84,7 @@ export default function BlogPost({ params }: Props) {
             {post.meta.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs font-medium text-[var(--accent)] bg-[var(--bg-secondary)] px-2 py-1 rounded"
+                className="text-xs font-medium text-[var(--accent)] bg-[var(--accent)]/8 px-2.5 py-1 rounded-md"
               >
                 {tag}
               </span>
@@ -122,7 +122,7 @@ export default function BlogPost({ params }: Props) {
             {prev ? (
               <Link
                 href={`/blog/${prev.slug}`}
-                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-lg hover:border-[var(--border-strong)] transition-colors duration-200"
+                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-xl hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300"
               >
                 <span className="text-xs text-[var(--text-muted)] flex items-center gap-1">
                   <ArrowLeft size={12} />
@@ -138,7 +138,7 @@ export default function BlogPost({ params }: Props) {
             {next ? (
               <Link
                 href={`/blog/${next.slug}`}
-                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-lg hover:border-[var(--border-strong)] transition-colors duration-200 md:text-right"
+                className="group flex flex-col gap-1 p-4 border border-[var(--border)] rounded-xl hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300 md:text-right"
               >
                 <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 md:justify-end">
                   下一篇
@@ -156,7 +156,7 @@ export default function BlogPost({ params }: Props) {
 
         {/* Newsletter CTA */}
         <footer className="mt-8">
-          <div className="bg-[var(--bg-secondary)] rounded-lg p-6 md:p-8">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl p-6 md:p-8">
             <h3 className="text-lg font-medium text-[var(--text-primary)] mb-2">
               觉得有价值？
             </h3>
