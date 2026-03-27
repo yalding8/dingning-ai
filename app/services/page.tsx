@@ -45,7 +45,7 @@ const trainingResults = [
 
 export default function ServicesPage() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] mb-4">
           AI 赋能国际教育
@@ -56,7 +56,7 @@ export default function ServicesPage() {
         </p>
 
         {/* 服务一：Vibe Coding 企业实训 */}
-        <div className="mb-16">
+        <div className="mb-20">
           <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
             Vibe Coding 企业实训
           </h2>
@@ -65,21 +65,24 @@ export default function ServicesPage() {
             不教语法，教解决问题。每节课 2 小时，每次结束时学员手里都有一个可运行的工具。
           </p>
 
-          <div className="space-y-3 mb-8">
-            {trainingModules.map((mod) => (
+          <div className="space-y-3 mb-10">
+            {trainingModules.map((mod, i) => (
               <div
                 key={mod.title}
-                className="border border-[var(--border)] rounded-lg p-4"
+                className="group border border-[var(--border)] rounded-xl p-4
+                           hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)]
+                           transition-all duration-300"
               >
                 <div className="flex items-center gap-3 mb-1">
+                  <span className="text-xs font-medium text-[var(--text-muted)] w-5">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="text-base font-medium text-[var(--text-primary)]">
                     {mod.title}
                   </h3>
-                  <span className="text-xs text-[var(--accent)] bg-[var(--bg-secondary)] px-2 py-0.5 rounded">
+                  <span className="text-xs text-[var(--accent)] font-medium bg-[var(--accent)]/8 px-2 py-0.5 rounded-md">
                     {mod.difficulty}
                   </span>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)]">
+                <p className="text-sm text-[var(--text-secondary)] ml-8">
                   {mod.description}
                 </p>
               </div>
@@ -94,9 +97,9 @@ export default function ServicesPage() {
             {trainingResults.map((result) => (
               <div
                 key={result.label}
-                className="bg-[var(--bg-secondary)] rounded-lg p-4"
+                className="bg-[var(--bg-secondary)] rounded-xl p-5 border border-[var(--border)]"
               >
-                <div className="text-lg font-semibold text-[var(--accent)] mb-1">
+                <div className="text-xl md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] mb-1">
                   {result.value}
                 </div>
                 <div className="text-sm text-[var(--text-primary)]">
@@ -113,15 +116,15 @@ export default function ServicesPage() {
 
           <Link
             href="/blog/vibecoding-training"
-            className="inline-flex items-center gap-1.5 text-sm text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200 group"
           >
             阅读完整实训复盘
-            <ArrowRight size={14} />
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
           </Link>
         </div>
 
         {/* 服务二：AI 落地咨询 */}
-        <div className="mb-16">
+        <div className="mb-20">
           <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
             AI 落地咨询
           </h2>
@@ -131,7 +134,7 @@ export default function ServicesPage() {
           </p>
 
           <div className="space-y-4">
-            <div className="border border-[var(--border)] rounded-lg p-4">
+            <div className="border border-[var(--border)] rounded-xl p-5 hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300">
               <h3 className="text-base font-medium text-[var(--text-primary)] mb-1">
                 业务场景诊断
               </h3>
@@ -141,7 +144,7 @@ export default function ServicesPage() {
               </p>
             </div>
 
-            <div className="border border-[var(--border)] rounded-lg p-4">
+            <div className="border border-[var(--border)] rounded-xl p-5 hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300">
               <h3 className="text-base font-medium text-[var(--text-primary)] mb-1">
                 团队 AI 能力建设
               </h3>
@@ -151,7 +154,7 @@ export default function ServicesPage() {
               </p>
             </div>
 
-            <div className="border border-[var(--border)] rounded-lg p-4">
+            <div className="border border-[var(--border)] rounded-xl p-5 hover:border-[var(--accent)]/30 hover:shadow-[var(--card-shadow)] transition-all duration-300">
               <h3 className="text-base font-medium text-[var(--text-primary)] mb-1">
                 产品方法论输出
               </h3>
@@ -164,32 +167,32 @@ export default function ServicesPage() {
         </div>
 
         {/* 我的行业背景 */}
-        <div className="mb-16">
+        <div className="mb-20">
           <h2 className="text-2xl font-semibold text-[var(--text-primary)] mb-4">
             为什么是我
           </h2>
-          <div className="bg-[var(--bg-secondary)] rounded-lg p-6">
-            <ul className="space-y-3 text-sm text-[var(--text-secondary)]">
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
+          <div className="bg-[var(--bg-secondary)] rounded-xl p-6 border border-[var(--border)]">
+            <ul className="space-y-4 text-sm text-[var(--text-secondary)]">
+              <li className="flex items-start gap-3">
+                <span className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                 <span>
                   不是外部顾问，是在自己业务上跑通 AI 的人——已落地 AI 客服、推荐引擎、数据分析自动化
                 </span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
+              <li className="flex items-start gap-3">
+                <span className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                 <span>
                   以非程序员身份用 Vibe Coding 独立构建了两个产品——证明「不会写代码」不是障碍
                 </span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
+              <li className="flex items-start gap-3">
+                <span className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                 <span>
                   实训方法论经过验证：首期 10 位主管全程参与，培训后工具实际使用率 80%
                 </span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--accent)] mt-0.5 shrink-0">—</span>
+              <li className="flex items-start gap-3">
+                <span className="w-1 h-1 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                 <span>
                   沉淀了 Gate-Review 评审方法论 + Vibe Coding 开发方法，可直接复用
                 </span>
@@ -209,7 +212,7 @@ export default function ServicesPage() {
           <div className="flex flex-col sm:flex-row gap-6 items-start">
             <a
               href="mailto:ceo@dingning.ai"
-              className="inline-flex items-center gap-2 text-sm text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors duration-200"
             >
               <Mail size={16} />
               ceo@dingning.ai
