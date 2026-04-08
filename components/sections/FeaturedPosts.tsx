@@ -1,10 +1,32 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getFeaturedPosts } from "@/lib/mdx";
+import { getAllPosts, getFeaturedPosts, type PostMeta } from "@/lib/mdx";
 import { PostViewCount } from "@/components/ui/PostViewCount";
+import { rankFeaturedPosts } from "@/lib/ranking";
+import { getViewsMap } from "@/lib/views";
 
-export function FeaturedPosts() {
-  const featuredPosts = getFeaturedPosts();
+const TOP_N = 6;
+
+async function resolveFeaturedPosts(): Promise<PostMeta[]> {
+  const allPosts = getAllPosts();
+  const manualPinned = getFeaturedPosts();
+  const pinnedSlugs = new Set(manualPinned.map((p) => p.slug));
+
+  let viewCounts: Record<string, number> = {};
+  try {
+    viewCounts = await getViewsMap(allPosts.map((p) => p.slug));
+  } catch (err) {
+    console.warn("[FeaturedPosts] getViewsMap failed, falling back to recency only", err);
+  }
+
+  const candidates = allPosts.filter((p) => !pinnedSlugs.has(p.slug));
+  const autoRanked = rankFeaturedPosts(candidates, viewCounts);
+
+  return [...manualPinned, ...autoRanked].slice(0, TOP_N);
+}
+
+export async function FeaturedPosts() {
+  const featuredPosts = await resolveFeaturedPosts();
   return (
     <section className="py-20 md:py-28 bg-[var(--bg-secondary)]">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
