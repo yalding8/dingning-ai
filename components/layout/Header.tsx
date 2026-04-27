@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navItems = [
   { label: "博客", href: "/blog" },
+  { label: "早咖啡", href: "/coffee" },
   { label: "服务", href: "/services" },
   { label: "项目", href: "/projects" },
   { label: "资源", href: "/resources" },
@@ -21,6 +22,7 @@ export function Header() {
 
   const isActive = (href: string) => {
     if (href === "/blog") return pathname === "/blog" || pathname.startsWith("/blog/");
+    if (href === "/coffee") return pathname === "/coffee" || pathname.startsWith("/coffee/");
     return pathname === href;
   };
 
