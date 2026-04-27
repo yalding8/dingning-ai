@@ -110,10 +110,10 @@ export default function CoffeeDetailPage({ params }: Props) {
             本页为新闻索引，每条仅含中文标题与简要事实摘要，所有内容版权归原媒体所有。
             如需 takedown，请联系{" "}
             <a
-              href="mailto:hello@dingning.ai"
+              href="mailto:ceo@dingning.ai"
               className="underline hover:text-[var(--accent)]"
             >
-              hello@dingning.ai
+              ceo@dingning.ai
             </a>
             。
           </p>
