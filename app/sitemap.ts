@@ -1,10 +1,12 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/mdx";
+import { getAllCoffee } from "@/lib/coffee";
 
 const BASE_URL = "https://dingning.ai";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
+  const coffeeIssues = getAllCoffee();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -15,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/coffee`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
@@ -52,5 +60,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages];
+  const coffeePages: MetadataRoute.Sitemap = coffeeIssues.map((issue) => ({
+    url: `${BASE_URL}/coffee/${issue.slug}`,
+    lastModified: new Date(issue.date),
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
+
+  return [...staticPages, ...blogPages, ...coffeePages];
 }

@@ -4,6 +4,7 @@ import { WeChatPopover } from "@/components/ui/WeChatPopover";
 
 const siteLinks = [
   { label: "博客", href: "/blog" },
+  { label: "早咖啡", href: "/coffee" },
   { label: "服务", href: "/services" },
   { label: "项目", href: "/projects" },
   { label: "资源", href: "/resources" },
