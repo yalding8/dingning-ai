@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getAllCoffee, getCoffeeBySlug, getAdjacentCoffee } from "@/lib/coffee";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
+import { ViewTracker } from "@/components/coffee/ViewTracker";
 
 export const revalidate = 3600;
 
@@ -118,6 +119,8 @@ export default function CoffeeDetailPage({ params }: Props) {
             。
           </p>
         </footer>
+
+        <ViewTracker slug={slug} />
       </div>
     </article>
   );
