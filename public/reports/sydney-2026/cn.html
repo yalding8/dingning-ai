@@ -54,8 +54,9 @@ body{font-family:var(--cn);background:var(--paper);color:var(--ink);line-height:
 .hero h1{font-size:clamp(38px,7vw,76px);line-height:1.14;font-weight:700;letter-spacing:.01em;max-width:13em}
 .hero h1 .accent{color:var(--coral)}
 .hero .deck{margin-top:30px;max-width:34em;color:var(--ink-soft);font-size:clamp(15px,1.6vw,18px)}
-.hero .meta{margin-top:40px;display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.hero .meta div{padding:16px 28px 16px 0;margin-right:28px;border-right:1px solid var(--line)}
+.hero .meta{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hero .meta div{padding:16px 20px;border-right:1px solid var(--line)}
+.hero .meta div:first-child{padding-left:0}
 .hero .meta div:last-child{border-right:none}
 .hero .meta b{display:block;font-family:var(--serif-num);font-weight:800;font-size:22px;color:var(--harbour)}
 .hero .meta span{font-size:12px;color:var(--ink-soft);letter-spacing:.08em}
@@ -158,8 +159,8 @@ footer .f-tag{font-family:var(--serif-num);font-size:11px;letter-spacing:.3em;te
 
 <div class="wrap">
   <div class="masthead">
-    <div class="brand">异乡好居 <em>uhomes</em></div>
-    <div class="issue">Field Notes · Sydney · Jun 2026</div>
+    <div class="brand">异乡好居</div>
+    <div class="issue">悉尼市场观察 · 2026 年 6 月</div>
   </div>
 
   <header class="hero">
@@ -211,7 +212,7 @@ footer .f-tag{font-family:var(--serif-num);font-size:11px;letter-spacing:.3em;te
       <div class="ch-num">01</div>
       <div>
         <h2>需求温度计：下行成为共识</h2>
-        <p class="sub">两轮独立调研使用了不同量表，但指向一致：与去年同期及 2025 fall 相比，悉尼咨询与签约量正在走弱，访谈样本的体感更冷。</p>
+        <p class="sub">两轮独立调研使用了不同量表，但指向一致：与去年同期及 2025 秋季入学相比，悉尼咨询与签约量正在走弱，访谈样本的体感更冷。</p>
       </div>
     </div>
     <div class="cols">
@@ -226,7 +227,7 @@ footer .f-tag{font-family:var(--serif-num);font-size:11px;letter-spacing:.3em;te
         </div>
         <div class="chart rv" style="margin-top:34px">
           <div class="ct">轮次 B · 一对一访谈（N=143）</div>
-          <div class="cn2">与 2025 fall 入学相比，悉尼地区留学咨询整体需求</div>
+          <div class="cn2">与 2025 秋季入学相比，悉尼地区留学咨询整体需求</div>
           <div class="bar-row hl"><span class="lab">明显下降</span><span class="bar coral"><i data-w="37.8"></i></span><b class="val">37.8%</b></div>
           <div class="bar-row"><span class="lab">略有下降</span><span class="bar coral"><i data-w="28.7"></i></span><b class="val">28.7%</b></div>
           <div class="bar-row"><span class="lab">基本持平</span><span class="bar"><i data-w="24.5"></i></span><b class="val">24.5%</b></div>
@@ -235,7 +236,7 @@ footer .f-tag{font-family:var(--serif-num);font-size:11px;letter-spacing:.3em;te
         </div>
       </div>
       <div>
-        <div class="bignum rv"><b>66.5%</b><span>访谈渠道反馈悉尼需求较 2025 fall 下降（明显 + 略有）</span></div>
+        <div class="bignum rv"><b>66.5%</b><span>访谈渠道反馈悉尼需求较 2025 秋季入学下降（明显 + 略有）</span></div>
         <div class="note rv">
           <h4>怎么读这组数</h4>
           <p>匿名自填的下降面约 <b>58.7%</b>，当面访谈升至 <b>66.5%</b>——渠道在面对面时更敢说实话。综合两轮口径，真实下降面落在 <b>55%–65%</b> 区间，且这是<b>咨询端</b>信号：按行业传导规律，它将在约一年后反映到住宿端。</p>
@@ -427,10 +428,10 @@ footer .f-tag{font-family:var(--serif-num);font-size:11px;letter-spacing:.3em;te
   <div class="wrap">
     <div class="f-grid">
       <div>
-        <div class="f-brand">异乡好居 <em>uhomes</em></div>
+        <div class="f-brand">异乡好居</div>
         <p>数据来源：异乡好居悉尼市场渠道调研（2026 年 6 月 7–11 日，N=218：自填问卷 75 份 + 一对一访谈 143 份）。两轮调研量表不同，百分比不可直接合并；所有引述均经匿名化处理。本报告仅供合作伙伴参考，不构成任何投资或经营建议。</p>
       </div>
-      <div class="f-tag">Sydney Field Notes · 2026</div>
+      <div class="f-tag">悉尼市场观察 · 2026</div>
     </div>
   </div>
 </footer>
