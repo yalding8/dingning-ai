@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="346" viewBox="0 0 760 346" font-family="'Montserrat','PingFang SC','Microsoft YaHei',sans-serif">
+<rect width="760" height="346" fill="#faf6ef"/>
+<rect x="1" y="1" width="758" height="344" fill="none" stroke="#d8cdb9" stroke-width="2"/>
+<rect x="28" y="30" width="34" height="4" fill="#e2543e"/>
+<text x="28" y="58" font-size="17" font-weight="700" fill="#1c2b33">学生吐槽最多的悉尼租房痛点</text>
+<text x="28" y="78" font-size="12" fill="#44565f">签约及准离境学生反馈，可多选（N=75）</text>
+<text x="264" y="101" font-size="12.5" fill="#1c2b33" text-anchor="end" font-weight="700">租金水平畸高</text>
+<rect x="276" y="88" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="88" width="265.0" height="18" fill="#e2543e"/>
+<text x="654" y="102" font-size="13" font-weight="800" fill="#e2543e">72.0%</text>
+<text x="264" y="135" font-size="12.5" fill="#1c2b33" text-anchor="end">优质房源难抢</text>
+<rect x="276" y="122" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="122" width="137.3" height="18" fill="#1f5d7a"/>
+<text x="654" y="136" font-size="13" font-weight="800" fill="#1c2b33">37.3%</text>
+<text x="264" y="169" font-size="12.5" fill="#1c2b33" text-anchor="end">通勤便利房源稀缺</text>
+<rect x="276" y="156" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="156" width="117.8" height="18" fill="#1f5d7a"/>
+<text x="654" y="170" font-size="13" font-weight="800" fill="#1c2b33">32.0%</text>
+<text x="264" y="203" font-size="12.5" fill="#1c2b33" text-anchor="end">合租安全顾虑</text>
+<rect x="276" y="190" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="190" width="103.0" height="18" fill="#1f5d7a"/>
+<text x="654" y="204" font-size="13" font-weight="800" fill="#1c2b33">28.0%</text>
+<text x="264" y="237" font-size="12.5" fill="#1c2b33" text-anchor="end">缺乏真实看房渠道</text>
+<rect x="276" y="224" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="224" width="93.1" height="18" fill="#1f5d7a"/>
+<text x="654" y="238" font-size="13" font-weight="800" fill="#1c2b33">25.3%</text>
+<text x="264" y="271" font-size="12.5" fill="#1c2b33" text-anchor="end">预订流程繁琐</text>
+<rect x="276" y="258" width="368" height="18" fill="#f3ecdf"/>
+<rect x="276" y="258" width="68.8" height="18" fill="#1f5d7a"/>
+<text x="654" y="272" font-size="13" font-weight="800" fill="#1c2b33">18.7%</text>
+<text x="28" y="324" font-size="10.5" fill="#44565f">数据：异乡好居悉尼渠道调研 2026.6 · 自填问卷 N=75</text>
+</svg>
