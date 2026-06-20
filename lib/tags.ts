@@ -8,5 +8,6 @@ export function getAllTags(): string[] {
       tagSet.add(tag);
     }
   }
-  return Array.from(tagSet).sort();
+  // 用 localeCompare 而非默认码点排序，保证中文/大小写混排标签按字典序展示
+  return Array.from(tagSet).sort((a, b) => a.localeCompare(b));
 }

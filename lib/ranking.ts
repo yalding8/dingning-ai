@@ -3,13 +3,16 @@ import type { PostMeta } from "./mdx";
 /**
  * Rank featured posts by a combined score of views (70%) and recency (30%).
  * Views are normalized against the max view count.
- * Recency decays linearly over 90 days from today.
+ * Recency decays linearly over 90 days from `now`.
+ *
+ * `now` is injectable (defaults to Date.now()) so the recency component is
+ * deterministically testable; production callers omit it.
  */
 export function rankFeaturedPosts(
   posts: PostMeta[],
-  viewCounts: Record<string, number>
+  viewCounts: Record<string, number>,
+  now: number = Date.now()
 ): PostMeta[] {
-  const now = Date.now();
   const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000;
 
   const maxViews = Math.max(1, ...posts.map((p) => viewCounts[p.slug] ?? 0));

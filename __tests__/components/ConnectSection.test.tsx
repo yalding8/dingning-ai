@@ -13,13 +13,12 @@ describe("ConnectSection", () => {
     expect(screen.getByText("每两周，一封来自 AI 实验场的信")).toBeInTheDocument();
   });
 
-  it("WeChat link is not an anchor with href='#'", () => {
+  it("renders WeChat contact as text, not a dead anchor", () => {
     render(<ConnectSection />);
-    const wechat = screen.getByText("微信公众号");
-    // Should be a span, not an anchor with href="#"
-    const parent = wechat.closest("span, a");
-    if (parent?.tagName === "A") {
-      expect(parent.getAttribute("href")).not.toBe("#");
-    }
+    // 微信现以 "微信：<id>" 文本 + 复制按钮渲染（WeChatCopyButton），不再是公众号链接
+    const wechat = screen.getByText(/微信：dingningdocai/);
+    expect(wechat).toBeInTheDocument();
+    // 不应是死链 <a href="#">
+    expect(wechat.closest("a")).toBeNull();
   });
 });
