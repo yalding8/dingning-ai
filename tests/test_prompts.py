@@ -38,6 +38,26 @@ def test_article_prompt_normal(sample_topic, sample_memories, sample_config):
     assert "3000" in prompt
 
 
+def test_article_prompt_has_anti_fabrication_guardrail(sample_topic, sample_memories, sample_config):
+    """护栏：文章 prompt 必须含真实性红线，禁止虚构地点/事件/原话/亲历场景。
+
+    锁住 PR #73 的教训——AI 借第一人称编造了"济南香格里拉展会"整场经历。
+    个人品牌站虚构=伤品牌，这条护栏不允许被静默移除。
+    """
+    import scripts.generate_blog_post as gen
+
+    prompt = gen.build_article_prompt(sample_topic, sample_memories, sample_config)
+
+    assert "真实性红线" in prompt
+    # 必须明确禁止虚构具体场景要素
+    assert "具体地点" in prompt
+    assert "原话" in prompt
+    # 必须澄清第一人称 ≠ 可虚构亲历
+    assert "第一人称" in prompt and "不等于" in prompt
+    # 必须给出"设想/演绎"的合规出口
+    assert "设想" in prompt
+
+
 def test_article_prompt_empty_source_projects(sample_memories, sample_config):
     """TC-13: source_projects 为空时包含所有 memory"""
     import scripts.generate_blog_post as gen
