@@ -195,6 +195,14 @@ def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_conten
   "summary": "一句话总结检查结果"
 }}
 
+## 关键约束（必读）
+- conflicts 数组**只能放真正矛盾的条目**（数值不一致、属性冲突、时间线矛盾、技术栈冲突）。
+- **严禁**把"数字一致 / 无冲突 / 仅作确认"的条目放进 conflicts —— 一致的条目直接不要出现在数组里。
+- 只有当存在真实矛盾时 pass 才为 false；若所有条目都一致，conflicts 必须为空数组、pass 必须为 true。
+
+正例（无冲突）：{{"pass": true, "conflicts": [], "summary": "所有指标一致"}}
+反例（禁止）：把 explanation 写成"数字一致，无冲突"却仍以 error 列入 conflicts。
+
 只输出 JSON，不要其他内容。如果没有冲突，conflicts 为空数组，pass 为 true。"""
 
     if provider == "anthropic":
@@ -240,6 +248,47 @@ def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_conten
         return json.loads(text.strip())
     except json.JSONDecodeError:
         return {"pass": False, "conflicts": [], "summary": f"LLM 返回格式异常: {text[:200]}"}
+
+
+# LLM judge 不可靠：经常把"已确认一致"的条目以 severity=error 塞进 conflicts[]
+# 并返回 pass=false（自相矛盾），导致 daily-blog 在完全合规的内容上失败
+# （2026-06-19 事故，见 docs/AUDIT_2026-06-20_FULL_REVIEW.md F1）。
+# 这些短语**无歧义地表示"一致/无冲突"**，凡命中的条目判为伪冲突过滤掉。
+# 注意：故意不含裸 "一致"，因为 "不一致" 是真冲突，含子串会误伤。
+_CONSISTENT_MARKERS = (
+    "无冲突", "不冲突", "无矛盾", "不矛盾", "没有冲突", "不存在冲突",
+    "无明显冲突", "仅作确认", "数字一致", "数值一致", "完全一致",
+    "保持一致", "前后一致", "信息一致", "内容一致", "口径一致",
+)
+_EN_CONSISTENT_MARKERS = (
+    "no conflict", "not a conflict", "consistent", "no inconsistency",
+)
+
+
+def _is_pseudo_conflict(entry: dict) -> bool:
+    """LLM 把'确认一致'误报成 conflict 的条目（explanation 自述无冲突）。"""
+    expl = str(entry.get("explanation", ""))
+    if any(m in expl for m in _CONSISTENT_MARKERS):
+        return True
+    low = expl.lower()
+    return any(m in low for m in _EN_CONSISTENT_MARKERS)
+
+
+def evaluate_llm_result(result: dict) -> tuple[bool, list[dict], list[dict]]:
+    """判定 LLM 检查结果是否应阻塞。
+
+    对 judge 的自相矛盾做防御：blocking 只取决于"真冲突里是否有 error 级"，
+    与 LLM 自报的 pass 字段解耦（pass=false 但全是伪冲突时不阻塞）。
+
+    返回 (has_blocking_error, real_conflicts, ignored_pseudo)。
+    """
+    conflicts = result.get("conflicts") or []
+    real: list[dict] = []
+    ignored: list[dict] = []
+    for c in conflicts:
+        (ignored if _is_pseudo_conflict(c) else real).append(c)
+    has_blocking_error = any(c.get("severity") == "error" for c in real)
+    return has_blocking_error, real, ignored
 
 
 def check_consistency(target_files: list[str] | None = None) -> bool:
@@ -309,13 +358,17 @@ def check_consistency(target_files: list[str] | None = None) -> bool:
             print("   🤖 LLM 语义一致性检查...")
             try:
                 result = call_llm_check(new_facts, existing_facts, content, config)
-                if not result.get("pass", True):
-                    for c in result.get("conflicts", []):
-                        severity_icon = "❌" if c["severity"] == "error" else "⚠️"
-                        print(f"   {severity_icon} [{c['field']}] {c['explanation']}")
-                        print(f"      已有: {c['existing']} ({c.get('existing_source', '?')})")
-                        print(f"      新文: {c['new']}")
-                    if any(c["severity"] == "error" for c in result.get("conflicts", [])):
+                blocking, real_conflicts, ignored = evaluate_llm_result(result)
+                # 计数 LLM 误报（实为确认一致），让"沉默的债"变响
+                if ignored:
+                    print(f"   ℹ️ 忽略 {len(ignored)} 条 LLM 误报（explanation 自述一致）")
+                if real_conflicts:
+                    for c in real_conflicts:
+                        severity_icon = "❌" if c.get("severity") == "error" else "⚠️"
+                        print(f"   {severity_icon} [{c.get('field', '?')}] {c.get('explanation', '')}")
+                        print(f"      已有: {c.get('existing', '')} ({c.get('existing_source', '?')})")
+                        print(f"      新文: {c.get('new', '')}")
+                    if blocking:
                         has_error = True
                 else:
                     print(f"   ✅ {result.get('summary', '无冲突')}")
