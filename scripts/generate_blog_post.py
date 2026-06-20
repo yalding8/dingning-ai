@@ -24,6 +24,13 @@ import datetime as dt
 from datetime import datetime
 from pathlib import Path
 
+# 溯源盖戳（溯源契约 ①）。兼容两种导入：直接 `python scripts/x.py`（scripts/ 在
+# sys.path）与作为包 `import scripts.generate_blog_post`（测试）。
+try:
+    from provenance import build_provenance
+except ImportError:
+    from scripts.provenance import build_provenance
+
 # 项目根目录
 ROOT_DIR = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT_DIR / "scripts" / "blog_config.yaml"
@@ -575,6 +582,15 @@ def create_mdx_file(topic: dict, content: str, output_dir: str) -> str:
     if first_para:
         excerpt = first_para
 
+    # 溯源戳（溯源契约 ①）：放进 frontmatter 隐藏字段，不渲染给读者，但 git 可追。
+    # 任何自动生成的文章都能还原出身（repo/script/commit/run/触发方式）。
+    trigger = "github-actions" if os.environ.get("GITHUB_ACTIONS") else "manual"
+    stamp = build_provenance(
+        script="scripts/generate_blog_post.py",
+        repo="dingning-ai",
+        trigger=trigger,
+    )
+
     mdx_content = f"""---
 title: "{topic['title']}"
 date: "{today}"
@@ -583,6 +599,7 @@ excerpt: "{excerpt}"
 tags: {tags_str}
 published: true
 featured: false
+generated_by: "{stamp}"
 ---
 
 {content}
