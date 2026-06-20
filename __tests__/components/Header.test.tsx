@@ -32,7 +32,8 @@ describe("Header", () => {
 
   it("renders CTA contact button", () => {
     render(<Header />);
-    expect(screen.getByText("联系我")).toBeInTheDocument();
+    // "联系我" 出现在桌面 CTA + 移动菜单两处
+    expect(screen.getAllByText("联系我").length).toBeGreaterThanOrEqual(1);
   });
 
   it("highlights the active nav item (blog)", () => {

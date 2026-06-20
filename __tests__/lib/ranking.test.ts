@@ -12,6 +12,9 @@ const makePost = (slug: string, date: string) => ({
   readingTime: "3 min read",
 });
 
+// 固定参考时间，让 recency 衰减确定性可测（不依赖运行时的 Date.now()）。
+const NOW = new Date("2026-03-21T00:00:00Z").getTime();
+
 describe("rankFeaturedPosts", () => {
   it("ranks posts with more views higher", () => {
     const posts = [
@@ -23,7 +26,7 @@ describe("rankFeaturedPosts", () => {
       "high-views": 100,
     };
 
-    const ranked = rankFeaturedPosts(posts, viewCounts);
+    const ranked = rankFeaturedPosts(posts, viewCounts, NOW);
     expect(ranked[0].slug).toBe("high-views");
     expect(ranked[1].slug).toBe("low-views");
   });
@@ -38,7 +41,7 @@ describe("rankFeaturedPosts", () => {
       "new-post": 50,
     };
 
-    const ranked = rankFeaturedPosts(posts, viewCounts);
+    const ranked = rankFeaturedPosts(posts, viewCounts, NOW);
     expect(ranked[0].slug).toBe("new-post");
   });
 
@@ -52,7 +55,7 @@ describe("rankFeaturedPosts", () => {
       "new-quiet": 5,
     };
 
-    const ranked = rankFeaturedPosts(posts, viewCounts);
+    const ranked = rankFeaturedPosts(posts, viewCounts, NOW);
     expect(ranked[0].slug).toBe("viral-old");
   });
 
@@ -63,7 +66,7 @@ describe("rankFeaturedPosts", () => {
     ];
     const viewCounts: Record<string, number> = { tracked: 20 };
 
-    const ranked = rankFeaturedPosts(posts, viewCounts);
+    const ranked = rankFeaturedPosts(posts, viewCounts, NOW);
     expect(ranked[0].slug).toBe("tracked");
   });
 });
