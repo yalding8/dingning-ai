@@ -30,6 +30,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 BLOG_DIR = ROOT_DIR / "content" / "blog"
 FACTS_DB = ROOT_DIR / "content" / "facts.json"
 CONFIG_PATH = ROOT_DIR / "scripts" / "blog_config.yaml"
+COMPANY_FACTS_PATH = ROOT_DIR / "memories" / "company-facts.md"
 
 # --- 事实提取（正则） ---
 
@@ -149,10 +150,21 @@ def get_changed_blog_files(base: str) -> list[str]:
         return []
 
 
-def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_content: str, config: dict) -> dict:
-    """调用 LLM 进行深层语义一致性检查"""
-    provider = config.get("llm", {}).get("provider", "anthropic")
+def load_company_facts() -> str:
+    """加载事实基准（memories/company-facts.md），缺失时返回空串。
 
+    这是 LLM judge 的最高权威事实来源：没有它，judge 无法区分
+    不同业务主体的同类指标（2026-07-19 事故：把异乡好居累计客户 40 万
+    与异乡缴费缴费客户 18 万+ 判为同一指标的冲突）。
+    """
+    try:
+        return COMPANY_FACTS_PATH.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+def build_llm_prompt(new_facts: list[dict], existing_facts: list[dict], new_content: str, ground_truth: str) -> str:
+    """构造 LLM 一致性审查 prompt（纯函数，便于测试）"""
     existing_summary = "\n".join(
         f"- [{f['source']}] {f['type']}: {f.get('value', '')} — {f['context']}"
         for f in existing_facts[:100]  # 限制长度
@@ -161,8 +173,20 @@ def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_conten
         f"- {f['type']}: {f.get('value', '')} — {f['context']}" for f in new_facts
     )
 
-    prompt = f"""你是一个内容一致性审查员。请检查新文章中的事实性声明是否与已有文章存在冲突。
+    ground_truth_section = ""
+    if ground_truth:
+        ground_truth_section = f"""
+## 事实基准（最高权威，用户确认的公司事实清单）
+{ground_truth}
 
+基准判定规则：
+- 上表是数字归属的最高权威。新文章的数字与基准一致且业务主体归属正确时，**不得报冲突**。
+- 异乡好居、异乡缴费、异乡人才、异乡点评是不同业务主体，**不同业务主体的同类指标（如各自的客户数）不是同一指标**，数字不同不算冲突。
+- 只有当两篇文章对**同一主体的同一指标**给出矛盾数字时才是冲突。
+"""
+
+    return f"""你是一个内容一致性审查员。请检查新文章中的事实性声明是否与已有文章存在冲突。
+{ground_truth_section}
 ## 已有文章的事实性声明
 {existing_summary}
 
@@ -178,6 +202,7 @@ def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_conten
 3. 时间线应该自洽（不能说 2024 年开始做的事情在 2023 年已经有成果）
 4. 技术栈描述应该一致（不能一篇说用 PostgreSQL，另一篇说用 MySQL）
 5. 如果数字有合理的时间推移变化（如岗位数增长），这不算冲突
+6. 判断数字是否为同一指标时，必须先确认业务主体一致；主体不同的数字不构成冲突
 
 ## 输出格式（严格 JSON）
 {{
@@ -204,6 +229,12 @@ def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_conten
 反例（禁止）：把 explanation 写成"数字一致，无冲突"却仍以 error 列入 conflicts。
 
 只输出 JSON，不要其他内容。如果没有冲突，conflicts 为空数组，pass 为 true。"""
+
+
+def call_llm_check(new_facts: list[dict], existing_facts: list[dict], new_content: str, config: dict) -> dict:
+    """调用 LLM 进行深层语义一致性检查"""
+    provider = config.get("llm", {}).get("provider", "anthropic")
+    prompt = build_llm_prompt(new_facts, existing_facts, new_content, load_company_facts())
 
     if provider == "anthropic":
         from anthropic import Anthropic
