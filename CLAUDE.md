@@ -37,6 +37,7 @@ Vercel SSG 静态部署不支持非 ASCII 文件名路由（中文 URL percent-e
 - **CI 门禁**：PR 包含博客内容变更时，`Content Consistency Check` job 自动运行
 - **自动博客**：`daily-blog.yml` 生成文章后、创建 PR 前自动检查
 - **双层检查**：第一层正则规则（快速免费）+ 第二层 LLM 语义分析（深层）
+- **事实基准**：LLM 语义检查以 `memories/company-facts.md` 为最高权威注入 prompt——不同业务主体（异乡好居/异乡缴费/异乡人才/异乡点评）的同类指标不是同一指标（2026-07-19 误报事故：好居 40 万客户 vs 缴费 18 万客户被判冲突）
 - **阻塞合并**：检查不通过时 CI 失败，PR 无法合并
 
 ### 写作时注意
